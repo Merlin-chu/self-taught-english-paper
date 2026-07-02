@@ -213,6 +213,68 @@
             border-color: rgba(255,255,255,0.15);
             font-size: 0.8rem;
         }
+
+        /* ===== 手机端适配 ===== */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+
+            .header { padding: 20px 16px; }
+            .header h1 { font-size: 1.2rem; }
+            .header p { font-size: 0.8rem; }
+
+            .user-bar {
+                padding: 12px 14px;
+                gap: 8px;
+            }
+            .user-bar .bar-left {
+                font-size: 0.75rem;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .user-bar a {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .user-bar .profile-link {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            .user-bar .logout-btn {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+
+            .year-section { padding: 14px 16px; }
+            .year-title { font-size: 1rem; }
+
+            .follow-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 16px;
+            }
+            .follow-section .qr-img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .user-bar .bar-left {
+                display: none;
+            }
+            .user-bar {
+                justify-content: flex-end;
+            }
+            .user-bar a {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -312,7 +374,7 @@
 
         <div class="follow-section">
             <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank">
-                <img class="qr-img" src="公众号二维码.JPG" alt="公众号二维码">
+                <img class="qr-img" src="images/公众号二维码.JPG" alt="公众号二维码">
             </a>
             <div class="follow-info">
                 <strong>关注公众号【美林自习室】</strong>
@@ -326,7 +388,7 @@
         </div>
     </div>
     <script src="js/app.js"></script>
-    <script src="follow-gate.js"></script>
+    <script src="js/follow-gate.js"></script>
     <script>
         // Check login status and update user bar
         (function waitForApp() {

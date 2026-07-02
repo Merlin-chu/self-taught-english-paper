@@ -8,31 +8,31 @@
 
 ## 功能一览
 
-### 📋 历年真题列表
+### 历年真题列表
 首页展示 2017–2026 全部真题，点击即可进入答题。
 
-![历年真题](历年真题.png)
+![历年真题](images/历年真题.png)
 
-### ✏️ 两种答题模式
+### 两种答题模式
 
 | 模式 | 说明 |
 |------|------|
 | **考试模式** | 全部答完后统一提交判分，模拟真实考试体验 |
 | **练习模式** | 每道题即时反馈对错和解析，适合边做边学 |
 
-![考试模式](考试模式.png)
+![考试模式](images/考试模式.png)
 
-![练习模式](练习模式.png)
+![练习模式](images/练习模式.png)
 
-### 📊 错题本
+### 错题本
 自动收集所有做错的题目，支持按考试年份和题型筛选，可打印或导出为 PDF。
 
-![错题本](错题本.png)
+![错题本](images/错题本.png)
 
-### 👤 个人中心
+### 个人中心
 查看刷题统计数据，支持数据导出/导入 JSON 备份，换设备也能迁移记录。
 
-![个人中心](个人中心.png)
+![个人中心](images/个人中心.png)
 
 ---
 
@@ -40,12 +40,11 @@
 
 ### 在线使用
 
-部署到 GitHub Pages 后，直接用浏览器访问链接即可。
+访问：**https://merlin-chu.github.io/self-taught-english-paper/**
 
 ### 本地运行
 
 ```bash
-cd deploy_dist
 python3 -m http.server 8000
 ```
 
@@ -64,28 +63,21 @@ python3 -m http.server 8000
 ## 项目结构
 
 ```
-├── README.md
-├── deploy_dist/               # 静态站点（部署目录）
-│   ├── index.html             # 首页 — 历年真题列表
-│   ├── login.html             # 登录
-│   ├── register.html          # 注册
-│   ├── profile.html           # 个人中心
-│   ├── wrong-questions.html   # 错题本
-│   ├── 20XX年X月.html          # 各年份真题（2017-2026）
-│   ├── quiz-tracker.js        # 答题记录追踪
-│   ├── follow-gate.js         # 微信公众号引导
-│   └── js/
-│       └── app.js             # 核心模块（用户系统 + 数据管理）
+├── index.html             # 首页 — 历年真题列表
+├── login.html             # 登录
+├── register.html          # 注册
+├── profile.html           # 个人中心
+├── wrong-questions.html   # 错题本
+├── 20XX年X月.html × 18     # 各年份真题（2017-2026）
+├── js/
+│   ├── app.js             # 核心模块（用户系统 + 数据管理）
+│   ├── quiz-tracker.js    # 答题记录追踪
+│   └── follow-gate.js     # 微信公众号引导
+├── images/
+│   ├── 公众号二维码.JPG     # 公众号二维码
+│   └── *.png              # 截图
+└── README.md
 ```
-
----
-
-## 部署到 GitHub Pages
-
-1. 在 GitHub 新建仓库
-2. 将 `deploy_dist/` 目录下的所有文件推送到仓库
-3. 仓库 **Settings → Pages** → Source 选择 `main` 分支，目录选 `/ (root)`
-4. 等待 1–2 分钟，访问 `https://你的用户名.github.io/仓库名/`
 
 ---
 
