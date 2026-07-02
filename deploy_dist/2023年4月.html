@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2023年4月 自考英语(二) · 完整原文+详细解析</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none; 
+            width: 100%; 
+            margin-top: 6px; 
+            font-size: 0.85rem; 
+            padding: 6px 10px; 
+            background: #eee; 
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+        
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2023年4月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+    
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Why Dogs Bury Their Favorite Bones</strong><br><br>
+                You may find it crazy that your dog buries his favorite bone or chew toy, only to dig it up a day or two later, but there is actually a reason behind it—it is simply in their nature. For thousands of years, dogs have buried their bones. The practice itself started long before dogs were even pets when they had to bury bones to survive.<br><br>
+                When dogs lived in the wild, sometimes food was scarce. If they were able to find food, dogs became very protective of it. Sometimes they would have more bones than they could eat for one meal. To keep other dogs and animals from stealing their bones, dogs would bury them in the ground. When it was time for the next meal, they would dig up their bones and enjoy them again. This would continue until the bones were gone.<br><br>
+                Even though most dogs have plenty of food to eat today, their instincts still tell them to bury their bones and favorite toys. They do this to keep other dogs and animals from stealing them, just like their ancestors did. Some dogs keep at least two bones buried at once. When they want to dig up one, they will bury one more. This may leave a backyard full of holes and bones.<br><br>
+                How do dogs decide where to bury their bones? A dog cannot bury a bone just anywhere. He must first find the perfect spot. This involves using his nose to find a spot that is free from other dogs and animals. Often it is near a tree or a large rock, but it could be anywhere in the yard. Once the dog finds the perfect spot, he uses his front paws to dig a hole, drops the bone in and covers up the hole to protect his treasure.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Public Wi-Fi Users Neglect Safety</strong><br><br>
+                A recent survey shows that 25% of Internet users have done online banking through public Wi-Fi in the last three months. It also shows that 27% have bought a product or service with a credit card this way.<br><br>
+                Experts worry that hackers (黑客) will take advantage of these practices. Doug Shadel said that hackers usually attack in two ways. They may create Wi-Fi hotspots that have the same name of the ones you trust, such as a hotel or a coffee shop. They may also provide a stronger Wi-Fi signal to get between you and the safe hotspot. In either case, the hackers can see your email, credit card information, user names and passwords.<br><br>
+                Sometimes hackers just set up their electronic traps near a business where people enjoy the free Wi-Fi. "In most cases they are after your personal information," Shadel said. "If you use the same user name and password for many accounts, they can get into them all. It's possible for any hacker to do it. The software to hack into a Wi-Fi network is available at little or no cost."<br><br>
+                "It's difficult for people to know if a Wi-Fi network is safe," Shadel said. "So you should just think they are not. Any shared Internet access, free or paid, carries the same level of risk. It is safe only when you or someone you trust directly controls it."<br><br>
+                Shadel sometimes checks email through public Wi-Fi. But he never does any banking that way. In an unfamiliar place, he uses a Virtual Private Network (VPN). "This service creates a passage between your device and a safe place on the Internet," he said.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>I Use Every Second Before I Go to Work</strong><br><br>
+                ① I wake up at 6 a.m. every day. The first thing I do when I wake up is grab my smartphone and take it to bathroom with me, where I start my day by consuming quite a lot of information to some websites, but the main site that I focus on during this time is Nuzzel, a collector of headlines and links. I recommend everyone look into it if they don't have time to properly focus on every website individually.<br><br>
+                ② After visiting those sites, I head to Twitter, my No.1 outlet for communication with the public. Twitter is becoming a listening platform. There is such a volume of information on the platform that you need pay attention to. So I spend a great amount of my morning responding to people and starting conversations.<br><br>
+                ③ After all this comes my workout (锻炼) with my trainer. I usually work out for about 45 minutes. The specific workout routine varies depending on the day of the week, what I ate, and how much I've been traveling.<br><br>
+                ④ After the workout, I head back home to get my children ready for school. I say bye to them and give them each a kiss before they leave. Then, I'm off to my office, often before 9 a.m..<br><br>
+                ⑤ In the car to my office, I call my mom, dad or sister. I talk to them just to learn what they're up to. I really value those small moments. By the time I step into my office, so much is going through my head. My day starts the minute I open my eyes.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) </div>
+            <p style="margin-bottom:10px;"><strong>写作要求：</strong> <br>假设你刚找到一份满意的工作。请给你的美国朋友 Tom 写一封英文电子邮件，分享你的喜悦，内容包括:<br>1. 你找了一份什么工作<br>2. 你为什么喜欢这份工作<br>请以 Li Ke 署名。词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的邮件..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ANSWERS = {
+        p1: ['A', 'B', 'A', 'C', 'C', 'A', 'A', 'B', 'B', 'C'],
+        p1Explain: [
+            "第1题：题干说狗天生就埋藏它们最喜欢的骨头或玩具。原文第一段说 'it is simply in their nature' (这仅仅是它们的天性)。故选True。",
+            "第2题：题干说狗成为宠物后才开始埋骨头。原文第一段说 'The practice itself started long before dogs were even pets' (这种做法在狗成为宠物之前很久就开始了)。故选False。",
+            "第3题：题干说野外的狗偶尔也能得到足够的食物。原文第二段说 'If they were able to find food... Sometimes they would have more bones than they could eat for one meal' (有时它们的骨头多到一顿吃不完)。说明确实偶尔有足够/多余的食物，故选True。",
+            "第4题：题干说狗会为幼崽埋藏多余的食物。原文通篇未提及babies或幼崽。故选Not Given。",
+            "第5题：题干说在古代动物为了食物会发生激烈的战斗。原文提到狗埋骨头是为了防止其他动物偷走，但未提及 'fierce fight' (激烈的战斗)。故选Not Given。",
+            "第6题：题干说有些狗倾向于同时储存多根骨头。原文第三段说 'Some dogs keep at least two bones buried at once.' (有些狗一次至少埋藏两根骨头)。故选True。",
+            "第7题：题干说狗主人的后院可能会布满狗挖的洞。原文第三段末尾说 'This may leave a backyard full of holes and bones.' (这可能会留下一个布满洞和骨头的后院)。故选True。",
+            "第8题：题干说狗通常在远离树木的地方埋骨头。原文第四段说 'Often it is near a tree or a large rock' (通常是在树或大石头附近)。故选False。",
+            "第9题：题干说狗用爪子来寻找埋藏骨头的地点。原文第四段说 'This involves using his nose to find a spot' (这需要用鼻子来寻找地点)，爪子(paws)是用来挖洞的。故选False。",
+            "第10题：题干说狗埋藏的骨头比咀嚼玩具多。原文提到狗会埋藏骨头或玩具，但并未对两者的数量进行比较。故选Not Given。"
+        ],
+        p2: ['A', 'B', 'C', 'D', 'B'],
+        p2Explain: [
+            "第11题：原文第一段 '25% of Internet users have done online banking through public Wi-Fi'，即使用公共Wi-Fi办理银行业务(do banking)。选A。",
+            "第12题：词义猜测题。'hackers will take advantage of these practices'。黑客会利用/占便宜，'benefit from' (从中获益)意思最接近。选B。",
+            "第13题：原文第三段 'If you use the same user name and password... they can get into them all. It's possible for any hacker to do it.' 说明任何黑客都有可能窃取人们的信息(steal people's information)。选C。",
+            "第14题：原文第四段Shadel建议：'So you should just think they are not [safe]. Any shared Internet access, free or paid, carries the same level of risk.' 既然共享网络都不安全，因此建议避免使用(avoid shared Internet access)。选D。",
+            "第15题：原文最后一段 'Shadel sometimes checks email through public Wi-Fi.' 说明他用公共Wi-Fi来处理邮件(deal with his emails)。选B。"
+        ],
+        task1: ['F', 'D', 'A', 'C', 'B'],
+        task1Explain: [
+            "段落①：提到起床后拿手机去卫生间，浏览网站获取信息，特别是Nuzzel。重点是访问网站获取信息 → F (I visit websites to get information.)",
+            "段落②：提到上Twitter与公众沟通、回复人们、开启对话。重点是在线与他人交流 → D (I communicate with others online.)",
+            "段落③：提到 'workout with my trainer'，锻炼45分钟。重点是早晨锻炼 → A (I do some morning exercise.)",
+            "段落④：提到 'get my children ready for school' 并亲吻他们告别。重点是为孩子上学做准备 → C (I prepare my kids for school.)",
+            "段落⑤：提到 'In the car... I call my mom, dad or sister.' 重点是给父母或姐姐打电话 → B (I phone my parents or sister.)"
+        ],
+        task2: ['F', 'A', 'D', 'C', 'E'],
+        task2Explain: [
+            "第21题：第一段提到推荐Nuzzel是因为 'if they don't have time to properly focus on every website individually' (如果没有时间逐个关注网站)，说明它能帮人高效上网 → F (to surf the Internet efficiently)",
+            "第22题：第二段提到 'Twitter is becoming a listening platform.' 在推特上他能倾听他人 → A (to listen to others)",
+            "第23题：第三段提到 'The specific workout routine varies depending on the day of the week, what I ate...' 这些因素会影响他的锻炼计划 → D (affect my workout routine)",
+            "第24题：第四段提到 'I say bye to them and give them each a kiss before they leave.' 孩子离家前会亲吻他们 → C (kiss them goodbye)",
+            "第25题：第五段提到 'I talk to them just to learn what they're up to.' 打电话是为了了解他们的近况 → E (to learn how they are doing)"
+        ],
+        part4: ['D', 'A', 'F', 'E', 'C'],
+        part4Explain: [
+            "第26空：前文提出问题 'Should children be allowed to take mobile phones to school?' (孩子应该被允许带手机去学校吗？)。选项D 'Now researchers say that they have an answer.' (现在研究人员说他们有答案了) 承接了这个问题，并引出后文的研究结论。 -> D",
+            "第27空：前文提到在英国90%青少年有手机，手机在老师眼里是个问题。选项A 'They are worried about the trend.' (他们对这个趋势感到担忧) 紧接上文的problem和数据增长。 -> A",
+            "第28空：该段首句。后文说到 'New York City has lifted a 10-year ban on phones at school.' (纽约市取消了长达10年的禁令)，意味着有些学校开始允许使用手机。选项F 'However, some schools are starting to allow limited use of mobile phones.' 完美引出纽约市的例子。 -> F",
+            "第29空：前文说研究发现禁令提高了成绩，成绩差的学生获益最大。后文说允许带手机会最大程度地伤害成绩差的学生。选项E 'Therefore, lifting the ban may in fact lead to the opposite.' (因此，取消禁令实际上可能会导致相反的结果) 在逻辑上起到了承上启下的连接作用。 -> E",
+            "第30空：前文说到现代技术被用于课堂以提高学生表现。选项C 'However, there are potential problems.' (然而，存在潜在问题) 提出了转折，引出后文 'Some students will pay no attention to their class.' (有些学生会不听课) 这一问题。 -> C"
+        ],
+        part5: ['C', 'L', 'J', 'F', 'H', 'I', 'D', 'E', 'G', 'B'],
+        part5Explain: [
+            "31空：They take __ for each setback (他们对每一次挫折承担__)。固定搭配 take responsibility for (对...负责)。填 responsibility -> C",
+            "32空：don't __ themselves by individual failures (不以个别的失败来__他们自己)。填动词原形 define (定义)。 -> L",
+            "33空：They __ that each setback is... (他们__每次挫折是...)。主语是They，填动词原形 recognize (认识到)。 -> J",
+            "34空：is a small __ of the whole (是整体的一小__)。填名词 part (部分)。 -> F",
+            "35空：achievers are __ to vary their approaches (成功者__改变他们的方法)。固定搭配 be willing to (愿意)。填 willing -> H",
+            "36空：If one __ doesn't work for you (如果一种__对你不奏效)。前文提到了 approaches，此处为单数，填名词 approach (方法)。 -> I",
+            "37空：if it brings repeated failures, __ try something else (如果带来反复的失败，__尝试其他事情)。填副词 then (那么/然后)。 -> D",
+            "38空：must do what works for you, not __ what works for other people (做对你有用的事，而不__是对其他人有用的事)。填副词 necessarily (必然地/必定)。 -> E",
+            "39空：successful people are __ (成功人士是__的)。形容词作表语，结合下文“不让一次错误打倒他们”，填 tough (坚韧的)。 -> G",
+            "40空：learn from their mistakes and __ on (从错误中学习并继续__)。固定搭配 move on (继续前进)。填 move -> B"
+        ],
+        part6: ['spending', 'charming', 'naturally', 'speaker', 'effective', 'requires', 'mistakes', 'equipment', 'winner', 'reaching'],
+        part6Explain: [
+            "41空：from __ (spend) time，介词from后接动名词，填 spending。",
+            "42空：be smart, witty and __ (charm)，与形容词smart, witty并列，填形容词 charming (迷人的)。",
+            "43空：can come __ (natural)，副词修饰动词come，填 naturally (自然地)。",
+            "44空：knowledge of the __ (speak)，of后接名词指人，填 speaker (演讲者)。",
+            "45空：having an __ (effect) presentation，形容词修饰presentation，填 effective (有效的)。",
+            "46空：Caring for your audience's needs __ (require)，主语是动名词短语Caring...，谓语用第三人称单数，填 requires。",
+            "47空：make __ (mistake)，泛指犯错误且前方无冠词，用复数形式 mistakes。",
+            "48空：The __ (equip) can fail，作主语，填名词 equipment (设备，不可数名词)。",
+            "49空：be a __ (win)，冠词a后接单数名词，填 winner (赢家)。",
+            "50空：successful at __ (reach)，介词at后接动名词，填 reaching。"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "Dogs bury their favorite bones or chew toys by nature.",
+            "Dogs started to bury their bones when they became pets.",
+            "Dogs in the wild occasionally had enough food.",
+            "Dogs would bury their extra food for their babies.",
+            "Animals would start a fierce fight over food in ancient times.",
+            "Some dogs tend to store up more than one bone at the same time.",
+            "The backyard of a dog owner may be full of holes dug by his dog.",
+            "Dogs often bury their bones far away from trees.",
+            "Dogs use their paws to find spots for burying bones.",
+            "Dogs bury more bones than chew toys."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "A recent survey finds that 25% of Internet users use public Wi-Fi to ______.",
+            "The phrase \"take advantage of\" (Para. 2) can best be replaced by \"______\".",
+            "According to Shadel, any hacker can ______.",
+            "For the sake of safety, Internet users are advised to ______.",
+            "Shadel uses public Wi-Fi to ______."
+        ];
+        const opts = [
+            ["A. do banking", "B. buy things", "C. provide service", "D. play cards"],
+            ["A. adjust to", "B. benefit from", "C. lead to", "D. result from"],
+            ["A. create different passwords", "B. open an electronic account", "C. steal people's information", "D. write software for businesses"],
+            ["A. test shared Internet access", "B. rely on paid Internet access", "C. look for free Internet access", "D. avoid shared Internet access"],
+            ["A. learn about VPN", "B. deal with his emails", "C. keep his account safe", "D. handle financial matters"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. I do some morning exercise.', 'B. I phone my parents or sister.', 'C. I prepare my kids for school.', 'D. I communicate with others online.', 'E. I help my kids with their homework.', 'F. I visit websites to get information.'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15 === 1 ? '①' : i-15 === 2 ? '②' : i-15 === 3 ? '③' : i-15 === 4 ? '④' : '⑤'} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Nuzzel helps me ______.",
+            "On Twitter I am able ______.",
+            "There are several factors that ______.",
+            "Before my kids go to school, I ______.",
+            "I call my parents ______."
+        ];
+        const opts = ['A. to listen to others', 'B. step into my office', 'C. kiss them goodbye', 'D. affect my workout routine', 'E. to learn how they are doing', 'F. to surf the Internet efficiently'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>Banning Mobile Phones at School</strong><br><br>It is a question that keeps some parents awake at night. Should children be allowed to take mobile phones to school?  ______(26)______ For parents who want their children to do well at school, it is no.<br><br>Banning mobile phones at school is effective. According to a UK study, after schools banned mobile phones, the test scores of students improved by 6.4%. The findings will influence the debate about children and mobile phones. In the UK, more than 90% of teenagers own a mobile phone; in the US, 75% have one. The popular mobile phone is a problem in the eye of teachers.  ______(27)______ In a 2001 survey, no school banned mobiles. By 2007, this had risen to 50%. By 2012, 98% of schools had taken action. Some did not allow phones. The others required them to be handed in at the beginning of the day.<br><br>______(28)______ New York City has lifted a 10-year ban on phones at school. It says that lifting the ban will promote equality. "This view is wrong," the researchers of the UK study write. "We found that the ban led to improvements in test scores among students. Low-achieving students gained the most.  ______(29)______ Allowing phones into schools will harm the lowest-achieving students the most."<br><br>The UK study was carried out at Birmingham, London, Leicester and Manchester schools before and after bans were introduced. "Technology is commonly viewed as increasing efficiency," the researchers write. "Modern technology is used in the classroom to improve student performance.  ______(30)______ Some students will pay no attention to their class."`;
+        const sentenceOptions = [
+            {val:'A', text:'A. They are worried about the trend.'},
+            {val:'B', text:'B. The mobile phone is a good example.'},
+            {val:'C', text:'C. However, there are potential problems.'},
+            {val:'D', text:'D. Now researchers say that they have an answer.'},
+            {val:'E', text:'E. Therefore, lifting the ban may in fact lead to the opposite.'},
+            {val:'F', text:'F. However, some schools are starting to allow limited use of mobile phones.'}
+        ];
+        
+        let html = `<div>`;
+        let parts = articlePrefix.split(/<br><br>/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+    
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Failing Forward</strong><br><br>There are several key abilities that allow successful people to fail forward instead of taking each setback personally. First, successful people don't blame themselves when they fail. They take  ____31____  for each setback, but they don't take the failure personally. Second, successful people don't  ____32____  themselves by individual failures. They  ____33____  that each setback is a small  ____34____  of the whole. Third, achievers are  ____35____  to vary their approaches to problems. That's important in every walk of life. If one  ____36____  doesn't work for you, if it brings repeated failures,  ____37____  try something else. To fail forward, you must do what works for you, not  ____38____  what works for other people. Finally, successful people are  ____39____ . They don't let one error keep them down. They learn from their mistakes and  ____40____  on.`;
+        const optList = [
+            {val:'A', text:'A. lucky'}, {val:'B', text:'B. move'}, {val:'C', text:'C. responsibility'}, {val:'D', text:'D. then'},
+            {val:'E', text:'E. necessarily'}, {val:'F', text:'F. part'}, {val:'G', text:'G. tough'}, {val:'H', text:'H. willing'},
+            {val:'I', text:'I. approach'}, {val:'J', text:'J. recognize'}, {val:'K', text:'K. easily'}, {val:'L', text:'L. define'}
+        ];
+        let html = `<div>`;
+        let paragraphs = baseText.split(/<br><br>/g);
+        for (let paragraph of paragraphs) {
+            let parts = paragraph.split(/(____\d+____)/g);
+            let paraHtml = `<p>`;
+            for (let part of parts) {
+                let match = part.match(/____(\d+)____/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                    selectHtml += `<option value="">--选词--</option>`;
+                    optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+    
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Achieving Success in a Presentation</strong><br><br>
+The success of a presentation (present) is leaving your audience with something of value. What do they get from  __41__(spend) time listening to your presentation? Many people think that they need to be brilliant to present well. They think that they need to be smart, witty and  __42__(charm) before they start to write a speech. Those qualities can come  __43__(natural), but most often, they come as a result of the passion and knowledge of the  __44__(speak).<br><br>
+One of the vital factors in having an  __45__(effect) presentation is serving the needs of your audience. Caring for your audience's needs  __46__(require) no perfection. You can make  __47__(mistake) and it's going to be OK. The  __48__(equip) can fail and it's still going to be OK. You don't have to use humor to be a  __49__(win). With that in mind, the real point is more like being successful at  __50__(reach) your audience.`;
+        
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+    
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+        
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+        
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+        
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+        
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block'; 
+            }
+            return;
+        }
+        
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+    
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+    
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

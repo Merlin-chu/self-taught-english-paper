@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自学考试英语（专升本）13000 00015 历年真题刷题</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            padding: 32px 40px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 6px;
+        }
+        .header p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .year-section {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px 28px;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        .year-section:hover {
+            border-color: #999;
+        }
+
+        .year-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .year-title::before {
+            content: '📅';
+            font-size: 1rem;
+        }
+
+        .paper-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 7px 16px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .paper-link:hover {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .paper-link.spring {
+            border-left: 3px solid #4a9;
+        }
+        .paper-link.autumn {
+            border-left: 3px solid #c75;
+        }
+        .paper-link.summer {
+            border-left: 3px solid #e9a;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .follow-section {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px 28px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .follow-section .qr-img {
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+            border: 1px solid #eee;
+            display: block;
+        }
+        .follow-section .follow-info strong {
+            color: #000;
+            font-size: 1rem;
+        }
+        .follow-section .follow-info p {
+            color: #555;
+            font-size: 0.85rem;
+            margin: 4px 0 8px;
+        }
+        .follow-section .follow-link {
+            display: inline-block;
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #333;
+            padding: 5px 16px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .follow-section .follow-link:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .footer {
+            text-align: center;
+            color: #999;
+            margin-top: 24px;
+            font-size: 0.8rem;
+        }
+
+        .user-bar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: none;
+            padding: 16px 28px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .user-bar .bar-left {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+        .user-bar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .user-bar a:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .user-bar a.primary-btn {
+            background: #e9a;
+            border-color: #e9a;
+            color: #fff;
+        }
+        .user-bar a.primary-btn:hover {
+            background: #d89;
+            border-color: #d89;
+        }
+        .user-bar .username {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .user-bar .profile-link {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 6px;
+            color: #e9a;
+            font-weight: 500;
+        }
+        .user-bar .profile-link:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .user-bar .logout-btn {
+            color: rgba(255,255,255,0.6);
+            border-color: rgba(255,255,255,0.15);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-bar" id="userBar">
+            <span class="bar-left" id="barLeft">自考英语（专升本）历年真题刷题平台</span>
+            <span id="userMenu">
+                <a href="register.html">注册</a>
+                <a href="login.html" class="primary-btn">登录</a>
+            </span>
+        </div>
+        <div class="header">
+            <h1>📝 高等教育自学考试全国统一命题考试<br>
+                英语（专升本）代码：13000或00015<br>
+                历年真题刷题
+            </h1>
+            <p><a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></p>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2026 年</div>
+            <div class="paper-list">
+                <a href="2026年4月.html" class="paper-link spring">🌸 4月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2025 年</div>
+            <div class="paper-list">
+                <a href="2025年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2025年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2024 年</div>
+            <div class="paper-list">
+                <a href="2024年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2024年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2023 年</div>
+            <div class="paper-list">
+                <a href="2023年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2023年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2022 年</div>
+            <div class="paper-list">
+                <a href="2022年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2022年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2021 年</div>
+            <div class="paper-list">
+                <a href="2021年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2021年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2020 年</div>
+            <div class="paper-list">
+                <a href="2020年8月.html" class="paper-link summer">☀️ 8月真题</a>
+                <a href="2020年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2019 年</div>
+            <div class="paper-list">
+                <a href="2019年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2019年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2018 年</div>
+            <div class="paper-list">
+                <a href="2018年4月.html" class="paper-link spring">🌸 4月真题</a>
+                <a href="2018年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <div class="year-title">2017 年</div>
+            <div class="paper-list">
+                <a href="2017年10月.html" class="paper-link autumn">🍂 10月真题</a>
+            </div>
+        </div>
+
+        <div class="follow-section">
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank">
+                <img class="qr-img" src="公众号二维码.JPG" alt="公众号二维码">
+            </a>
+            <div class="follow-info">
+                <strong>关注公众号【美林自习室】</strong>
+                <p>获取更多自考资料、真题解析和备考资讯</p>
+                <a class="follow-link" href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank">微信打开关注 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            🚀 由 Makers Drop 驱动 · 点击任意试卷即可开始刷题
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+    <script src="follow-gate.js"></script>
+    <script>
+        // Check login status and update user bar
+        (function waitForApp() {
+            if (typeof QuizApp === 'undefined') { setTimeout(waitForApp, 50); return; }
+
+            var userMenu = document.getElementById('userMenu');
+
+            if (QuizApp.User.isLoggedIn()) {
+                var username = QuizApp.User.getCurrent();
+                document.getElementById('barLeft').textContent = '欢迎回来，' + username;
+                userMenu.innerHTML =
+                    '<a href="wrong-questions.html">错题本</a>' +
+                    '<a href="profile.html" class="profile-link">个人中心</a>' +
+                    '<a href="#" class="logout-btn" id="logoutBtn">退出</a>';
+                document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    QuizApp.User.logout();
+                    window.location.reload();
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

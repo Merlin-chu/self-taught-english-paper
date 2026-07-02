@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2023年10月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2023年10月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>The Kid That Saved His Dad</strong><br><br>
+                On a sunny day last April, Bode, then nine, and his father, John Taylor, 54, were snowmobiling around the remote country of Lake Tahoe. As they were driving on the snow, a little dry branch jammed in the brake of John's vehicle. Unable to slow down, John rushed toward a pine tree. He moved to jump off the vehicle before it crashed, but his pantleg (裤腿) caught underneath it. John felt his leg broken. As he sank six inches into the powdery snow, he could tell his arms and shoulder were injured too. Bode rushed to dig out his father, but John stopped him. They had no water, little food, and no cell phone service. "Get on your snowmobile," John told Bode. "Follow the road, and try to find help."<br><br>
+                After a 20-minute ride, Bode spotted a tour group and asked the guide to radio for help. The rescuers quickly appeared on the scene. And Bode led them through the white wilderness to his dad, who was pale and in pain.<br><br>
+                While they were waiting for a plane to send John to the nearest hospital, the rescuers quickly stabilized his leg. An hour later, he received surgery for the broken leg and internal bleeding.<br><br>
+                Today, John's leg has healed enough for him to take Bode out on dirt bikes. Father and son now carry extra devices on their trips, including a two-way radio with an emergency button. "I'm still a little afraid to go out on a snowmobile," says Bode. "But I'm starting to feel better about it."<br><br>
+                Tisha Shaw, Bode's mother, says her son's courage and quick thinking have led her to treat him as more of an adult. She lets him stay up later at night because "I trust his judgment," she says.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Exercise at Home</strong><br><br>
+                Home exercise is the new phenomenon in fitness. It's easy to see why more and more people are taking interest in home exercise.<br><br>
+                All it takes to get results at home is an exercise mat, and some free weights. Even if you don't have these tools, there are several kinds of exercise you can do around the house. You can always try the exercise that uses your own body weight. The secret to success is to exercise the right way without hurting yourself.<br><br>
+                At home, you can train at your own time. You are not affected by the timings of your gym or your trainer. This is an excellent solution for stay-at-home moms, and those individuals who work from home or have an irregular work schedule. With the number of tools available today, it is simple to set up a gym atmosphere in the comfort of your own home.<br><br>
+                To get results at home, you need self-motivation and discipline, since you're going to be on your own. It's not as hard as you think and can be enjoyable and beneficial. When you are committed mentally to pursuing a leaner, energized and dynamic fitness level, changes happen much faster.<br><br>
+                There're some other advantages home exercise has over a health club. After all, a club is a social institution. If one gets there to socialize more, he will exercise less. A club could also be crowded. Many people may wait in line for the equipment. With home exercise, there's no waiting period. So, many individuals are now exercising at home. In fact, as a recent study says, exercising at home is just as beneficial as working out at a health club. It also found that people who trained at home were more likely to stick with their program than those who exercised at a club.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Secrets About Professional Chocolate Tasters</strong><br><br>
+                ①People's faces light up when I say I taste chocolate for a living, but it's not always delicious. I also have to taste bad chocolate. I'm usually in a small room and sit in front of a computer to record information. Sometimes the room has red lighting. So I can evaluate chocolate only by taste, not appearance.<br><br>
+                ②I can sample as many as 30 chocolates per day. To taste them professionally, I spit the sweets back out. That's another not-so-sweet part of the job. Between samples, I wait 30 seconds to let my senses rest, and I chew half an unsalted biscuit and drink plain warm water.<br><br>
+                ③First I smell the chocolate and record it. I also listen: Old chocolate doesn't make a clear and sharp sound when broken. Then I put a tiny piece in my mouth and leave it there for a few seconds. I let it melt and record the four basic tastes—sweet, sour, bitter and salty.<br><br>
+                ④I love chocolate. The bottom part of my refrigerator is filled with chocolate from different parts of the world. My favorite types are very high in cocoa (可可粉). Before I started tasting chocolate professionally, I ate a lot. But now I don't eat so much.<br><br>
+                ⑤Many people don't know how to appreciate the taste of chocolate. As a taster, I want to help others do that. To retrain your taste buds to enjoy better quality chocolate, try simple kinds that aren't filled with ingredients like nuts. Look at food with curiosity and see its color, smell and taste. Then you'll know good quality.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "My Goal for Next Year"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 你明年的目标是什么<br>2. 你打算如何实现这一目标<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'C', 'A', 'B', 'A', 'B', 'C', 'A', 'C', 'A'],
+        p1Explain: [
+            "第1题：原文明确说 'On a sunny day last April' → 选True。",
+            "第2题：文中未提及Bode的雪地车坏了 → Not Given。",
+            "第3题：原文 'John felt his leg broken'，受伤了 → 选True。",
+            "第4题：John让Bode去找人帮忙，而不是打电话（没有手机信号）→ 选False。",
+            "第5题：Bode找到旅游团，让导游用无线电求助 → 选True。",
+            "第6题：原文 'While they were waiting for a plane... the rescuers stabilized his leg' 是在地面上，不是在飞机上 → 选False。",
+            "第7题：文中未提及手术持续了多久 → Not Given。",
+            "第8题：原文 'carry extra devices on their trips' → 装备更好了 → 选True。",
+            "第9题：文中未提及Bode学用无线电的速度 → Not Given。",
+            "第10题：母亲夸儿子勇敢、机智，并说 'I trust his judgment' → 选True。"
+        ],
+        p2: ['C', 'A', 'C', 'D', 'B'],
+        p2Explain: [
+            "第11题：原文 'All it takes... is an exercise mat, and some free weights' 需要很少的工具 → 选C。",
+            "第12题：原文 'excellent solution for stay-at-home moms' → 最适合家庭主妇 → 选A。",
+            "第13题：原文 'need self-motivation and discipline' → 需要自律 → 选C。",
+            "第14题：原文 'If one gets there to socialize more, he will exercise less'，健身房的人花很多时间社交 → 选D。",
+            "第15题：全文主要讲在家锻炼的好处 → 选B。"
+        ],
+        task1: ['D', 'A', 'C', 'F', 'B'],
+        task1Explain: [
+            "段落①：品巧克力不总是甜的，有时要品尝坏的 → D",
+            "段落②：通过吐出来、休息味觉来保持良好味觉 → A",
+            "段落③：品尝巧克力需要技巧（闻、听、尝）→ C",
+            "段落④：我仍然喜欢巧克力 → F",
+            "段落⑤：教普通人像专业人士一样品尝 → B"
+        ],
+        task2: ['F', 'D', 'A', 'E', 'C'],
+        task2Explain: [
+            "第21题：红光用来掩饰巧克力的外观 → F",
+            "第22题：每尝完一个样本让味觉休息 → D",
+            "第23题：听声音来判断样本是新鲜还是陈旧 → A",
+            "第24题：成为品鉴师之前吃了很多巧克力 → E",
+            "第25题：坚果等配料可能影响你的品尝 → C"
+        ],
+        part4: ['E', 'A', 'D', 'F', 'B'],
+        part4Explain: [
+            "第26空：前文说快速闪过看到动作，后文说电影也称影片，填入E（这就是为什么电影被称为motion pictures）。",
+            "第27空：前文说电影是一幕一幕拍的，后文说场景不按顺序，填入A（一幕是一镜一镜拍的）。",
+            "第28空：前文说特效包括模型和布景，后文说用它们拍摄不存在的场景，填入D（也包括电脑制作的图像）。",
+            "第29空：前文说胶片可转成电脑文件，后文说用电脑制作新图像，填入F（电影制作者可以随意改变图像）。",
+            "第30空：后文举例《泰坦尼克号》中计算机制作的图像，包括人群，填入B（电脑甚至可以制作演员的图像）。"
+        ],
+        part5: ['J', 'D', 'K', 'E', 'B', 'L', 'I', 'F', 'C', 'A'],
+        part5Explain: [
+            "31空：know（知道）→ J",
+            "32空：then（那么）→ D",
+            "33空：exploit（利用）→ K",
+            "34空：important（重要的）→ E",
+            "35空：attend（参加）→ B",
+            "36空：easier（更容易的）→ L",
+            "37空：however（然而）→ I",
+            "38空：caution（告诫）→ F",
+            "39空：pay attention（注意）→ C",
+            "40空：truth（事实）→ A"
+        ],
+        part6: ['older', 'unfortunately', 'solution', 'cards', 'profitable', 'successful', 'satisfied', 'found', 'looking', 'named'],
+        part6Explain: [
+            "41空：older（更年长）比较级",
+            "42空：unfortunately（不幸地）副词",
+            "43空：solution（解决方案）名词",
+            "44空：cards（信用卡）复数",
+            "45空：profitable（有利可图的）形容词",
+            "46空：successful（成功的）形容词",
+            "47空：satisfied（满意的）过去分词",
+            "48空：found（发现）过去时",
+            "49空：looking（寻找）现在分词",
+            "50空：named（命名）过去时"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "Bode and his father went snowmobiling last April.",
+            "Bode's snowmobile broke down on the way.",
+            "John had an accident and injured himself.",
+            "John told his son to make a call for help.",
+            "A tour guide helped Bode to contact the rescuers.",
+            "The rescuers stabilized John's leg on the plane.",
+            "John's surgery lasted for a long time.",
+            "Bode and his father are better equipped for their trips now.",
+            "Bode learned to use the two-way radio quickly.",
+            "Tisha Shaw has great praise for her son."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "A good aspect about home exercise is that it ______.",
+            "Home exercise best fits ______.",
+            "To achieve the desired results from home exercise, you need to ______.",
+            "People who go to health clubs are likely to ______.",
+            "This passage mainly talks about ______."
+        ];
+        const opts = [
+            ["A. causes no injury", "B. yields quick results", "C. requires few tools", "D. takes little hard work"],
+            ["A. housewives", "B. policewomen", "C. office workers", "D. school children"],
+            ["A. enjoy yourself", "B. know its benefits", "C. discipline yourself", "D. record your changes"],
+            ["A. stick with their favorite programs", "B. make better use of gym equipment", "C. reap more gains from the training", "D. spend much time making friends"],
+            ["A. types of home exercise", "B. advantages of home exercise", "C. ways to do home exercise", "D. people fit for home exercise"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. How I keep a good sense of taste.', 'B. You can taste chocolate like a professional.', 'C. Tasting chocolate requires skills.', 'D. Tasting chocolate is not as sweet as you think.', 'E. Tasting chocolate is the best job ever.', 'F. I\'m still a chocolate lover.'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Red lights are used to disguise ______.",
+            "I let my senses rest ______.",
+            "I listen to tell whether a sample ______.",
+            "I ate a lot of chocolate ______.",
+            "Ingredients like nuts may affect ______."
+        ];
+        const opts = ['A. is old or fresh', 'B. is made of cocoa', 'C. your tasting', 'D. after I taste each sample', 'E. before I became a taster', 'F. the appearance of chocolate'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>How to Shoot a Movie</strong><br><br>
+A movie is a series of pictures. Each image is a still picture, just like a picture you take with a regular camera. But the pictures flash by so fast in a movie. As a result, you see horses run, people talk, and other kinds of motion. ______(26)______ Movies are also called films because they are filmed.<br><br>
+Lots of work has to be done before the filming begins. The producer and the director plan how and when they will film each scene.<br><br>
+A movie is filmed scene by scene. ______(27)______ The scenes are not usually filmed in the order you see in the movie. Sometimes the weather is bad and an outdoor scene cannot be filmed. Big fancy sets take a long time to build. Scenes using these sets are often shot later. However, you may see them at the beginning of the film.<br><br>
+Sometimes a movie needs special effects. They include small models of huge scenes and cleverly designed sets. ______(28)______ Moviemakers use these to film scenes and places that do not exist. They might use a small model of a large building to film the building falling down.<br><br>
+Films can be turned into computer files. ______(29)______ They can use computers to make new images. For example, dinosaurs (恐龙) made by computer looked like they were flying in some films.<br><br>
+______(30)______ Many images in <em>Titanic</em>, including crowds of people on the ship, were actually made by computer. In some other films, computers were used to make the actors look as if they were fighting while floating in the air.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. And a scene is filmed shot by shot.'},
+            {val:'B', text:'B. Computers can even make images of actors.'},
+            {val:'C', text:'C. Moviemaking includes several different stages.'},
+            {val:'D', text:'D. They also include computer-made images.'},
+            {val:'E', text:'E. That\'s why movies are sometimes called motion pictures.'},
+            {val:'F', text:'F. Moviemakers can change the images any way they want.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Friendship and Loyalty</strong><br><br>
+Loyalty found in a friend is similar to making a deposit in a bank account. More often than not, your deposits ____31____ interest, an interest in your well-being and welfare. A loyal friend attracts another loyal friend. In essence, water does seek its own level.<br><br>
+If you were a best loyal friend, ____32____ I'm sure you understand the principle of loyalty in a friend. You should never ____33____ your best loyal friend to gain more power or make yourself seem more ____34____ to others. These are not the traits of a best loyal friend.<br><br>
+A best loyal friend doesn't care who is invited to your party. They will ____35____ your party and celebrate you, just in the way a best loyal friend should do.<br><br>
+Reconnecting with a best loyal friend is ____36____ to do on the Internet. A virtual friend, ____37____, doesn't assure you of his loyalty. My ____38____ to you is that you'd better pay ____39____ to the smiling faces on the Internet. In the 1980s we were warned of smiling faces in a song, which contained these lyrics (歌词), "A smile is just a frown turned upside down, my friend." Now, that is the ____40____ for my generation.`;
+        const optList = [
+            {val:'A', text:'A. truth'}, {val:'B', text:'B. attend'}, {val:'C', text:'C. attention'},
+            {val:'D', text:'D. then'}, {val:'E', text:'E. important'}, {val:'F', text:'F. caution'},
+            {val:'G', text:'G. impatient'}, {val:'H', text:'H. gain'}, {val:'I', text:'I. however'},
+            {val:'J', text:'J. know'}, {val:'K', text:'K. exploit'}, {val:'L', text:'L. easier'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Ambition Can Lead to Success</strong><br><br>
+Since his early years Reid had been thinking(think) of changing the world. As he grew __41__(old) he became interested in the Internet and the tech industry. At first, he started a social network. But __42__(fortunately) he faced big problems that forced him to stop.<br><br>
+One day Reid got an idea. It was to provide a __43__(solve) for people to pay online. They could use their emails instead of credit __44__(card). Reid called his idea PayPal. PayPal faced tough competition from large credit card companies. It was hardly __45__(profit), but after a long struggle, it became __46__(success).<br><br>
+Reid was not __47__(satisfy). He kept searching for the next big thing that can help him improve people's lives. One day he __48__(find) that people spend a lot of time __49__(look) for jobs online. So he decided to create a website that connects employers with job seekers and __50__(name) it LinkedIn.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

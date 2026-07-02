@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 自考英语刷题平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            background: #fff; border: 1px solid #ddd; padding: 24px 32px;
+            margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .header h1 { font-size: 1.3rem; color: #000; }
+        .user-info { display: flex; align-items: center; gap: 16px; }
+        .username { font-weight: 600; color: #333; }
+        .logout-btn {
+            padding: 8px 16px; background: #f0f0f0; border: 1px solid #ccc;
+            color: #555; font-size: 0.85rem; cursor: pointer; text-decoration: none;
+        }
+        .logout-btn:hover { background: #e0e0e0; }
+        .stats-card {
+            background: #fff; border: 1px solid #ddd; padding: 28px 32px; margin-bottom: 20px;
+        }
+        .stats-title {
+            font-size: 1rem; font-weight: bold; color: #000; margin-bottom: 20px;
+            padding-bottom: 12px; border-bottom: 1px solid #eee;
+        }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+        }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #333; }
+        .stat-label { font-size: 0.85rem; color: #666; margin-top: 4px; }
+        .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .action-card {
+            background: #fff; border: 1px solid #ddd; padding: 24px;
+            text-decoration: none; color: inherit; transition: border-color 0.2s;
+        }
+        .action-card:hover { border-color: #999; }
+        .action-card h3 { font-size: 1rem; color: #000; margin-bottom: 8px; }
+        .action-card p { font-size: 0.85rem; color: #666; }
+        .back-link { display: inline-block; margin-top: 20px; color: #666; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #333; }
+        .data-section {
+            background: #fff; border: 1px solid #ddd; padding: 20px 32px; margin-bottom: 20px;
+        }
+        .data-section h3 { font-size: 0.95rem; margin-bottom: 12px; color: #333; }
+        .data-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+        .data-btn {
+            padding: 8px 18px; background: #f0f0f0; border: 1px solid #ccc;
+            font-size: 0.85rem; cursor: pointer; color: #555; transition: all 0.2s;
+        }
+        .data-btn:hover { background: #e0e0e0; }
+        .data-btn.danger { color: #b91c1c; border-color: #fcc; }
+        .data-btn.danger:hover { background: #fee; }
+        .data-btn.primary { background: #333; color: #fff; border-color: #333; }
+        .data-btn.primary:hover { background: #555; }
+        @media (max-width: 700px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .actions { grid-template-columns: 1fr 1fr; }
+            .header { flex-direction: column; gap: 16px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .actions { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>个人中心</h1>
+            <div class="user-info">
+                <span class="username" id="usernameDisplay">-</span>
+                <a href="#" class="logout-btn" id="logoutBtn">退出登录</a>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <div class="stats-title">刷题统计</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalQuestions">0</div>
+                    <div class="stat-label">已做题数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="correctQuestions">0</div>
+                    <div class="stat-label">答对题数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wrongQuestions">0</div>
+                    <div class="stat-label">答错题数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="accuracy">0%</div>
+                    <div class="stat-label">正确率</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="index.html" class="action-card">
+                <h3>继续刷题</h3>
+                <p>选择历年真题进行练习</p>
+            </a>
+            <a href="wrong-questions.html" class="action-card">
+                <h3>错题本</h3>
+                <p>查看做错的题目，针对性练习</p>
+            </a>
+            <a href="login.html" class="action-card">
+                <h3>切换账号</h3>
+                <p>切换到其他账号</p>
+            </a>
+        </div>
+
+        <div class="data-section">
+            <h3>数据管理</h3>
+            <div class="data-btns">
+                <button class="data-btn primary" id="exportBtn">导出答题数据</button>
+                <button class="data-btn" id="importBtn">导入答题数据</button>
+                <input type="file" id="importFile" accept=".json" style="display:none;">
+                <button class="data-btn danger" id="clearBtn">清除所有数据</button>
+            </div>
+            <div id="dataMsg" style="margin-top:12px;font-size:0.85rem;display:none;"></div>
+        </div>
+
+        <a href="index.html" class="back-link">← 返回首页</a>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        (function waitForApp() {
+            if (typeof QuizApp === 'undefined') { setTimeout(waitForApp, 50); return; }
+
+            if (!QuizApp.User.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 显示用户名
+            document.getElementById('usernameDisplay').textContent = QuizApp.User.getCurrent();
+
+            // 加载统计
+            const stats = QuizApp.Data.getStats();
+            document.getElementById('totalQuestions').textContent = stats.total;
+            document.getElementById('correctQuestions').textContent = stats.correct;
+            document.getElementById('wrongQuestions').textContent = stats.wrong;
+            document.getElementById('accuracy').textContent = stats.accuracy + '%';
+
+            // 退出
+            document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+                QuizApp.User.logout();
+                window.location.href = 'index.html';
+            });
+
+            // 导出数据
+            document.getElementById('exportBtn').addEventListener('click', function () {
+                const data = QuizApp.Data.exportData();
+                if (!data) {
+                    showMsg('没有数据可以导出', 'error');
+                    return;
+                }
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'quiz-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                showMsg('数据已导出，请保存好备份文件', 'success');
+            });
+
+            // 导入数据
+            document.getElementById('importBtn').addEventListener('click', function () {
+                document.getElementById('importFile').click();
+            });
+
+            document.getElementById('importFile').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    const result = QuizApp.Data.importData(ev.target.result);
+                    if (result.success) {
+                        showMsg('成功导入 ' + result.count + ' 条答题记录', 'success');
+                        // 刷新统计
+                        setTimeout(function () { window.location.reload(); }, 800);
+                    } else {
+                        showMsg(result.error, 'error');
+                    }
+                };
+                reader.readAsText(file);
+                this.value = '';
+            });
+
+            // 清除数据
+            document.getElementById('clearBtn').addEventListener('click', function () {
+                if (confirm('确定要清除当前账号的所有答题数据吗？此操作不可恢复！\n\n建议先导出备份。')) {
+                    if (confirm('再次确认：清除所有刷题记录和错题数据？')) {
+                        QuizApp.Data.clearAll();
+                        showMsg('数据已清除', 'success');
+                        setTimeout(function () { window.location.reload(); }, 500);
+                    }
+                }
+            });
+
+            function showMsg(text, type) {
+                const el = document.getElementById('dataMsg');
+                el.textContent = text;
+                el.style.display = 'block';
+                el.style.color = type === 'success' ? '#2c7d64' : '#b91c1c';
+                setTimeout(function () { el.style.display = 'none'; }, 3000);
+            }
+        })();
+    </script>
+</body>
+</html>

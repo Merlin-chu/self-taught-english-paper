@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2019年10月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2019年10月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>To Lease (租赁) or Not to Lease</strong><br><br>
+                Planning to lease a car because you don't think you can afford to buy? Think again. Leasing can end up being just as expensive as buying.<br><br>
+                Most people think about leasing because they believe it will cost them less money. They're right—it is cheaper, but only in the short term. For example, if you were to lease a new Subaru Forester, you might pay 300 per month for the car. If you buy the same car, you would pay about 400 per month. Over a three-year lease, you would save $3,600—a big savings. But after your lease is over, you have to give the car back.<br><br>
+                Many people want to lease because they can drive a more expensive car than they might otherwise be able to afford. For example, if you spend $300 monthly on a car, you might be able to lease a new Ford Explorer. For the same price, you might have to buy a used Explorer, or buy a new but much less expensive model. A lease, therefore, allows you to drive the latest models of more expensive cars. However, whatever car you can afford to buy, you get to keep it, and it will always have a resell or trade-in (以旧换新) value if you want to upgrade to a new car later.<br><br>
+                Furthermore, people who lease cars are often shocked by how much they must pay when the lease is over. Most leases limit you to a certain number of miles. If you go over that, you must pay for each mile. As a result, you may end up paying thousands of dollars in mileage (里程) fees. In addition, when you lease, you have to pay for regular maintenance and repairs to the vehicle. Since you must return the car finally, you are paying to repair someone else's car.<br><br>
+                By now, the benefits of buying over leasing should be clear. Remember: whatever model you can afford to buy, it is yours after you make the payments. There's no giving back, and that makes all the difference.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Mental Illness Hits Small Business Owners Hard</strong><br><br>
+                While there is a growing focus on mental health in the workplace, there are fewer resources and support available to those running small businesses.<br><br>
+                There are many reasons people choose to have their own business: being their own boss, working on something they love, being able to set their own hours, or having some control over whom they work with. Yet the reality many small business owners face is far less attractive—financial stress, long working hours and unclear boundaries between work and family life. And all of these factors can have a huge impact on their mental health.<br><br>
+                Leanne Fawkner is a business owner of an award-winning skin-care range (系列产品). She knows very well the impact that a small business can have on the mental health of its owner. When her successful business struggled due to the global financial crisis, she suffered a lot mentally. "As business slowed, I was more and more affected," she says. "I couldn't separate myself from my business. It was the worst experience of my life. I could no longer go to work and was crying all day."<br><br>
+                Fawkner was diagnosed with depression. She had to take several months off work. Fortunately, her husband was able to keep things going while Fawkner was recovering. She saw a counselor (咨询师) for help and took part in a workplace mental health promotion program. This program was designed for small to medium business owners.<br><br>
+                "The stories on the DVD in the program were so helpful. I was crying because I didn't feel so alone." For Fawkner, small business owners are overlooked. While employees in larger organizations often have access to employee assistance programs, small business owners are struggling on their own.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Secrets for a Happier You</strong><br><br>
+                Some people are naturally blessed with a cheerful character. They spread warmth and sunshine wherever they go. They attract people like bees to honey. So what is it that makes these people so different from others?<br><br>
+                ①The most important secret to happiness is to be grateful for the good things in your life—whatever may be your financial position. Instead of appreciating material wealth, be thankful for the loved ones in your life and enjoy the little pleasures of life that come your way.<br><br>
+                ②The next most important secret is to develop relationships. Increasing social contacts helps boost brain power. Therefore, work towards improving your relationships and take time off to get in touch with friends. This will lift some burden off your shoulders, especially when you share your thoughts and feelings. Socializing can give you an added boost to your moods.<br><br>
+                ③Thirdly, do not hold a grudge (怨恨) against anyone. Instead, learn to be kind, generous, and forgiving towards others, even to the person who hurt you. Be sympathetic and understanding, and try not to criticize others. Focus on the positives of a person instead of the negatives, for none of us is born perfect. It will keep your heart and mind free and peaceful.<br><br>
+                ④Besides, involve yourself in some creative process, be it dancing, writing or drawing. This can bring out the hidden talent in you to achieve magical happiness. Or pick up new skills and feel the great sense of satisfaction by carrying out certain tasks which you otherwise would never have felt.<br><br>
+                ⑤Finally, follow a daily regular sleep-wake cycle to keep you energetic and happy. Exercise regularly or practice relaxation techniques like deep breathing and yoga (瑜伽). Ensure you get eight to nine hours of sleep every day and have a well-balanced diet.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "Green Transportation"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 你怎样理解绿色出行<br>2. 你会选择哪种绿色出行方式<br>3. 给出理由<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'B', 'C', 'A', 'C', 'C', 'A', 'B', 'B', 'A'],
+        p1Explain: [
+            "第1题：原文 'Most people think about leasing because they believe it will cost them less money.' → 人们认为租赁省钱 → 选True。",
+            "第2题：原文 'it is cheaper, but only in the short term' → 短期便宜，长期不便宜 → 选False。",
+            "第3题：文中未提及更多人租赁 → Not Given。",
+            "第4题：原文 'drive a more expensive car than they might otherwise be able to afford' → 可以租负担不起的车 → 选True。",
+            "第5题：文中未提及年轻人偏好 → Not Given。",
+            "第6题：文中只举例提到Ford Explorer，未说最受欢迎 → Not Given。",
+            "第7题：原文 'often shocked by how much they must pay' → 支付超出预期 → 选True。",
+            "第8题：原文 'Most leases limit you to a certain number of miles. If you go over that, you must pay for each mile.' → 超过限制才收费，不是每英里都收费 → 选False。",
+            "第9题：原文 'you have to pay for regular maintenance and repairs' → 承租人自己付维修费 → 选False。",
+            "第10题：文章最后建议购买能负担的车 → 选True。"
+        ],
+        p2: ['A', 'D', 'C', 'C', 'D'],
+        p2Explain: [
+            "第11题：原文 'being able to set their own hours' → 灵活工作时间 → 选A。",
+            "第12题：原文 'long working hours' → 工作时间长 → 选D。",
+            "第13题：原文 'due to the global financial crisis' → 金融危机 → 选C。",
+            "第14题：原文 'I didn't feel so alone' 因为看到DVD上其他人的类似经历 → 选C。",
+            "第15题：Fawkner认为小企业主被忽视，需要更多心理健康帮助 → 选D。"
+        ],
+        task1: ['E', 'D', 'F', 'C', 'B'],
+        task1Explain: [
+            "段落①：感恩拥有 → E",
+            "段落②：改善人际关系 → D",
+            "段落③：理解与宽容 → F",
+            "段落④：做有创意的事 → C",
+            "段落⑤：健康生活方式 → B"
+        ],
+        task2: ['C', 'B', 'A', 'D', 'E'],
+        task2Explain: [
+            "第21题：开朗的性格让你与众不同 → C",
+            "第22题：享受生活乐趣，即使贫穷 → B",
+            "第23题：社交让你更聪明 → A",
+            "第24题：即使受伤也要试着原谅 → D",
+            "第25题：创意活动让你发挥潜力 → E"
+        ],
+        part4: ['B', 'C', 'A', 'F', 'D'],
+        part4Explain: [
+            "第26空：前文说注意到法国人与人互动，后文说亲吻，填入B（它们与英国有很大不同）。",
+            "第27空：前文说亲吻是问候替代说hello，后文说所有人都参与，填入C（亲吻常替代言语）。",
+            "第28空：前文说我不介意，后文说把陌生人变熟人，填入A（事实上，我很喜欢）。",
+            "第29空：前文说法国人对陌生人更开放，后文说在英国只在必要时和陌生人说话，填入F（在英国，只有在完全必要时才和陌生人说话）。",
+            "第30空：前文说法国人开放健谈，后文说这也让我更舒服，填入D（这也让我和他们在一起更舒服）。"
+        ],
+        part5: ['G', 'I', 'E', 'C', 'A', 'F', 'J', 'D', 'K', 'H'],
+        part5Explain: [
+            "31空：buy（购买）→ G",
+            "32空：boss（老板）→ I",
+            "33空：finally（最终）→ E",
+            "34空：set（设定）→ C",
+            "35空：owned（拥有）→ A",
+            "36空：several（几个）→ F",
+            "37空：selling（销售）→ J",
+            "38空：worth（价值）→ D",
+            "39空：lower（更低的）→ K",
+            "40空：usually（通常）→ H"
+        ],
+        part6: ['blamed', 'belongings', 'impossible', 'heard', 'natural', 'probably', 'incorrect', 'successful', 'wisely', 'trying'],
+        part6Explain: [
+            "41空：blamed（被责备）被动",
+            "42空：belongings（财产）名词复数",
+            "43空：impossible（不可能的）加前缀im-",
+            "44空：heard（听说）过去分词",
+            "45空：natural（自然的）形容词",
+            "46空：probably（很可能）副词",
+            "47空：incorrect（不正确的）加前缀in-",
+            "48空：successful（成功的）形容词",
+            "49空：wisely（明智地）副词",
+            "50空：trying（尝试）动名词"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "People usually think leasing a car can save money.",
+            "Leasing a car costs less in the long term.",
+            "More people like to lease cars than before.",
+            "People can lease a car they cannot afford.",
+            "Young people prefer to lease the latest models of cars.",
+            "Ford Explorer is the most popular model in the leasing market.",
+            "People often pay more than they expect for a lease.",
+            "People need to pay for each mile they drive during the lease.",
+            "Leasing companies pay for repairs to the leased cars.",
+            "The author advises people to buy an affordable car."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "One reason to have one's own business is that one can have more ______.",
+            "A small business owner usually has ______.",
+            "Fawkner's business ran into trouble because ______.",
+            "Fawkner didn't feel so alone because ______.",
+            "According to Fawkner, small business owners need more ______."
+        ];
+        const opts = [
+            ["A. flexible working hours", "B. support from others", "C. available resources", "D. life experience"],
+            ["A. a more colorful life", "B. a bigger profit", "C. less stress from work", "D. longer working time"],
+            ["A. it was taken over by her husband", "B. she had a serious mental problem", "C. it was hit by the financial crisis", "D. she started a mental health program"],
+            ["A. she had her family around", "B. she could watch DVD at work", "C. others had similar experiences", "D. the counselor was helpful to her"],
+            ["A. financial aid", "B. technical knowledge", "C. management skills", "D. mental health assistance"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Help people in need', 'B. Have a healthy lifestyle', 'C. Do something creative', 'D. Better your social relationships', 'E. Be thankful for what you have', 'F. Learn to understand and forgive'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "A cheerful character makes you ______.",
+            "Enjoy the pleasures of life ______.",
+            "Socializing can make you ______.",
+            "Try to forgive ______.",
+            "Creative activities enable you ______."
+        ];
+        const opts = ['A. more intelligent', 'B. even if you are poor', 'C. different from others', 'D. even when you are hurt', 'E. to develop your potential', 'F. to gain more material wealth'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>Cultural Differences in England and France</strong><br><br>
+Cultural differences can take many forms. I have noticed many differences in French culture compared to English culture, from the way people dress, to their attitudes towards food, to what they do for fun. One thing that has struck me in particular in France is people's personal interactions with each other. ______(26)______<br><br>
+Firstly, it's the kissing. Everyone kisses each other on the cheek. It's a greeting, instead of saying "hi" or "hello". ______(27)______ Everyone participates in the kissing ritual, the young, the old, male, female, strangers and friends. I kiss my friends. I kiss the teachers at the school. And even if I'm in a hurry, I am still expected to make time to give acquaintances a quick kiss on the cheek as I rush past. I don't mind it. ______(28)______ It quickly turns strangers into acquaintances, and acquaintances into friends.<br><br>
+Another thing that I've noticed is that people in France are much more open with people they don't know. ______(29)______ In France, however, on long train journeys people have often started a conversation with me for no reason. They have a chat simply to pass the time. And I really enjoy being able to share a part of my life and my story with someone else.<br><br>
+Whatever impressions you may have about French people, I have found that they are, for the most part, open and at ease talking to strangers. ______(30)______`;
+        const sentenceOptions = [
+            {val:'A', text:'A. In fact, I quite like it.'},
+            {val:'B', text:'B. They differ a lot from those in the UK.'},
+            {val:'C', text:'C. Often the kiss is a substitute for words.'},
+            {val:'D', text:'D. This makes me more comfortable with them too.'},
+            {val:'E', text:'E. Britons often greet each other with hugs and kisses.'},
+            {val:'F', text:'F. In England, you talk to a stranger only if completely necessary.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Success for 99 Cents</strong><br><br>
+How do you sell things in a time when the economy is down and people just don't want to ____31____? Try the 99 cent approach.<br><br>
+Steve Jobs, former ____32____ of Apple Computers, tried it and ____33____ saved the music industry. He ____34____ a standard price of 99 cents for each song that he wanted to sell on iTunes and built a successful music download company.<br><br>
+In the 1960s, Dave Gold ____35____ a store that sold alcoholic drinks in southern California. He sold wine in three ____36____ categories: 0.79, 0.99 and $1.49. When he saw that the 99 cent wine did best, he started selling the other two at the same price and sales went up. In 1982, he started ____37____ 99 cent stores across the US. Today the company is ____38____ almost 500 million dollars and has 280 shops.<br><br>
+Why does a 99 cent price tag (标签) make so much success? Researchers have found out that the price ending with .99 shows a ____39____ price for consumers. It looks less and consumers ____40____ feel that they can get something back.`;
+        const optList = [
+            {val:'A', text:'A. owned'}, {val:'B', text:'B. market'}, {val:'C', text:'C. set'},
+            {val:'D', text:'D. worth'}, {val:'E', text:'E. finally'}, {val:'F', text:'F. several'},
+            {val:'G', text:'G. buy'}, {val:'H', text:'H. usually'}, {val:'I', text:'I. boss'},
+            {val:'J', text:'J. sell'}, {val:'K', text:'K. lower'}, {val:'L', text:'L. price'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Learning From Mistakes</strong><br><br>
+Lots of people dare not make mistakes (mistake). They fear they will be laughed at or __41__(blame) by others. They fear they will lose their money and __42__(belonging) or be under heavy stress. But risks are __43__(possible) to avoid and they do pave the way towards success. Have you ever __44__(hear) of anyone who achieves success without making any mistakes?<br><br>
+So it is only __45__(nature) that making mistakes should be considered a must. You shouldn't worry about that as you __46__(probable) get lots of advantages out of your mistakes. By making mistakes, you can at least distinguish between the correct and the __47__(correct) parts of what you did. Robert Stevenson once said: "Our business in life is not to be __48__(success), but to continue to fail in good spirits."<br><br>
+You needn't worry about anything as long as you keep on going by __49__(wise) learning from your mistakes and __50__(try) even harder.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

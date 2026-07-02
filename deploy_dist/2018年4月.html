@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2018年4月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2018年4月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Life on the Farm</strong><br><br>
+                Life on a farm is always changing. New technologies and a rising interest in healthier and organic eating have had a huge impact on how farms do business. At the same time, a growing population has put more demands on farmers. They need to find ways to increase their production levels. The small family farms that used to produce most of the products have been largely replaced by factory farms. Small family farms that are still operating are struggling to keep up.<br><br>
+                Technology has made most aspects of farm life easier than it has ever been before. Bigger and more efficient equipment makes work such as plowing up fields and sowing the seeds easier. Such tasks used to take two or three times as long. These advances have allowed farmers to work faster and more efficiently than ever before.<br><br>
+                In addition to newer technology, factory farms produce more products for less money than traditional farming would require.<br><br>
+                Modern farm life, despite the introduction of new technologies, has not changed much from what it has always been. Farmers still wake up early, and spend their days doing hard work. There are still animals to feed, cows to be milked, and fields to be plowed. Farm life still requires a lot of hard work and sacrifice.<br><br>
+                The main change in modern farm life is in the way farms are run. It is common for even small farms to have several hired workers and even an animal manager. Family-run farms are becoming rarer. Factory farms, with other larger farm corporations, are becoming the norm. Although there are still many traditional family farms, they are quickly dying as modern practices change farm life forever.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Christmas Gift</strong><br><br>
+                Mary didn't know what to send to her grandparents for Christmas. It was always hard to choose a good Christmas present for them. They didn't need much, and it was hard for her to be creative every year.<br><br>
+                One year, she sent them a big wooden elephant. It sat on the counter for a year, but then it disappeared, probably into a closet somewhere. Another year, she made handmade soaps with nice smells, but they probably weren't any better than store-bought soaps. Last year, she sent lots of nice pictures of herself in frames, but grandparents' house was small, and they couldn't hang up very many.<br><br>
+                This year, she decided on fruit. She lived where it was warm and there was lots of nice fruit. Her grandparents lived up north, where it was colder and they couldn't get fresh fruit all year, or at least not oranges and grapefruit. Fresh fruit was healthy for her grandparents, too.<br><br>
+                Mary went to a fruit store and sampled the red oranges. She really liked them and bought a kilogram. Then she tried three kinds of grapefruit. The white ones were sour. The star grapefruit were interesting, but the dark red grapefruit were great. So she got a kilogram.<br><br>
+                Mary carefully packed the fruit in a box to keep them safe and dry in case one got smashed and its juice got everywhere. Then she wrote the address on the box and mailed it from the store. She felt happy with what she bought.<br><br>
+                A few days later, Mary got a phone call from her grandparents, thanking her for the lovely fruit. They said it was a healthy, tasty, and very thoughtful gift. Mary had never felt so good before.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Team Work in Sports</strong><br><br>
+                ① Teams that win in team sports are often those that work well together. Learning to cooperate with others towards a common goal in sports is what builds character, friendship and important life skills for players.<br><br>
+                ② Working towards a common goal will keep the team firmly together. Entering into a new season in sports, you might only know a few of the players on your team. Some of the players may be people you do not like. But when your team decides to be the winner of the season, personal differences are often set aside for the common good of the team. By the end of the season, players who have fought through the whole season may become good friends, much like brothers.<br><br>
+                ③ For kids and young adults, team sports offer a way for them to get out and meet with friends. This can help them avoid spending too much time at home watching television and playing video games. Team work teaches people how to help each other and encourage each other. It can also give players a greater respect for one another and can build friendships that last a lifetime.<br><br>
+                ④ Team work in sports offers a way for people to compete for something together. It is important to know that winning is not everything in sports and healthy competition can be good for people. Working towards a goal can teach people the value of hard work, commitment and devotion. Team sports are a great way to learn these values.<br><br>
+                ⑤ Team work in sports can help young people develop stronger communication skills. As every member must work for the same goal, they learn how to work with one another successfully.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) 给Tom的邮件</div>
+            <p style="margin-bottom:10px;"><strong>题目：</strong> 假设你将举办一次周末小聚会，准备邀请你的英国朋友 Tom 参加。请给他写一封英文电子邮件，内容包括：</p>
+            <ul style="margin-bottom:10px; padding-left:20px;">
+                <li>活动主题：为 Lucy 举办生日晚会</li>
+                <li>时间、地点</li>
+                <li>询问 Tom 能否参加</li>
+            </ul>
+            <p style="margin-bottom:10px;"><strong>署名：</strong> Li Ke</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'C', 'A', 'A', 'B', 'C', 'B', 'B', 'A', 'C'],
+        p1Explain: [
+            "第1题：原文 'The small family farms... have been largely replaced by factory farms.' 工厂农场现在生产大部分产品 → 选True。",
+            "第2题：文中提到人们对健康有机食品兴趣增加，但未说农民更喜欢种有机食品 → Not Given。",
+            "第3题：原文 'Small family farms that are still operating are struggling to keep up.' 小农场难以生存 → 选True。",
+            "第4题：原文 'Bigger and more efficient equipment makes work such as plowing... easier.' 机器耕作是现代农业进步 → 选True。",
+            "第5题：原文 'factory farms produce more products for less money'，现代产品成本更低 → 选False。",
+            "第6题：文中未提及农民是否买不起新机器 → Not Given。",
+            "第7题：原文 'Farm life still requires a lot of hard work' → 现代农民仍需辛苦劳作 → 选False。",
+            "第8题：原文 'The main change... is in the way farms are run.' 管理方式改变了 → 选False。",
+            "第9题：原文 'Family-run farms are becoming rarer.' → 越来越少 → 选True。",
+            "第10题：文中未提及从城市雇佣工人 → Not Given。"
+        ],
+        p2: ['A', 'C', 'D', 'B', 'A'],
+        p2Explain: [
+            "第11题：文章开头 'Mary didn't know what to send... It was always hard to choose'，她为礼物发愁 → 选A。",
+            "第12题：原文 'Last year, she sent lots of nice pictures of herself in frames' → 选C。",
+            "第13题：她精心挑选水果，考虑健康、适合北方等，很体贴 thoughtful → 选D。",
+            "第14题：她买了红橙子和深红色葡萄柚（dark red grapefruit）→ 选B。",
+            "第15题：祖父母打电话感谢，说礼物健康美味 → 他们喜欢 → 选A。"
+        ],
+        task1: ['C', 'A', 'D', 'B', 'F'],
+        task1Explain: [
+            "段落①：团队合作 → C",
+            "段落②：共同目标 → A",
+            "段落③：运动和友谊 → D",
+            "段落④：健康竞争 → B",
+            "段落⑤：沟通技能 → F"
+        ],
+        task2: ['B', 'E', 'C', 'F', 'D'],
+        task2Explain: [
+            "第21题：团队合作塑造品格 → B",
+            "第22题：决定赢赛季时放下个人差异 → E",
+            "第23题：孩子学会互相帮助 → C",
+            "第24题：学会努力和奉献的价值 → F",
+            "第25题：在团队运动中建立持久友谊 → D"
+        ],
+        part4: ['B', 'E', 'A', 'D', 'F'],
+        part4Explain: [
+            "第26空：前文说学校环境分散注意力，后文说家庭学校提供更少干扰 → B",
+            "第27空：前文说学校条件差，后文说家庭学校父母可以控制环境 → E",
+            "第28空：前文说在家上学的孩子不必待在学校，后文说他们可以在社区 → A",
+            "第29空：前文说校园欺凌严重，后文说学校开始处理但仍害怕 → D",
+            "第30空：前文说学校削减郊游，后文说家庭学校可以去户外 → F"
+        ],
+        part5: ['C', 'F', 'D', 'G', 'I', 'H', 'B', 'J', 'E', 'L'],
+        part5Explain: [
+            "31空：all the family members → C",
+            "32空：had prepared the soil → F",
+            "33空：my job to drop... → D",
+            "34空：in the rows → G",
+            "35空：freshly turned earth → I",
+            "36空：afterward → H",
+            "37空：underneath the ground → B",
+            "38空：pulled out → L",
+            "39空：delicious food → E",
+            "40空：entire family → J"
+        ],
+        part6: ['used', 'helpful', 'careers', 'working', 'effectively', 'valuable', 'knowing', 'difference', 'professional', 'suppliers'],
+        part6Explain: [
+            "41空：when used（被使用时）过去分词",
+            "42空：helpful（有帮助的）",
+            "43空：careers（职业生涯）复数",
+            "44空：working（工作）现在分词",
+            "45空：effectively（有效地）副词",
+            "46空：valuable（有价值的）",
+            "47空：knowing（知道）动名词",
+            "48空：difference（差异）名词",
+            "49空：professional（专业的）",
+            "50空：suppliers（供应商）复数"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "Factory farms now produce most of the products.",
+            "Farmers prefer to grow healthy and organic food.",
+            "Small family farms find it hard to survive.",
+            "Plowing and sowing by machines are advances in modern farming.",
+            "Modern farm products cost more than those from traditional farming.",
+            "Most farmers cannot afford new machines.",
+            "Modern farmers do not have to work hard.",
+            "New technologies have not changed farm management.",
+            "There are fewer and fewer family-run farms now.",
+            "Modern farms are hiring workers from cities."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "Mary was troubled because she ______.",
+            "What did Mary send her grandparents last year?",
+            "In selecting the gifts, Mary was ______.",
+            "Which of the following did Mary buy for her grandparents this year?",
+            "Mary's grandparents ______."
+        ];
+        const opts = [
+            ["A. had no idea for a holiday gift", "B. was not creative in her work", "C. could not afford Christmas gifts", "D. found her grandma hard to please"],
+            ["A. A wooden elephant.", "B. Handmade soaps.", "C. Her own pictures.", "D. A store-bought closet."],
+            ["A. excited", "B. impatient", "C. exhausted", "D. thoughtful"],
+            ["A. Yellow oranges.", "B. Dark red grapefruit.", "C. White grapefruit.", "D. Star grapefruit."],
+            ["A. loved her gift", "B. sent her a card", "C. wrote her a letter", "D. put her gift away"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. The common goal', 'B. Healthy competition', 'C. Team cooperation', 'D. Exercising and friendship', 'E. Problems between team members', 'F. Building communication skills'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Cooperation in team sports helps build ______.",
+            "When your team decides to win the season, you set aside ______.",
+            "In team sports, kids learn to ______.",
+            "In team sports, people learn the value of ______.",
+            "A long-lasting friendship can be built ______."
+        ];
+        const opts = ['A. set a goal', 'B. character', 'C. help each other', 'D. in team sports', 'E. your personal differences', 'F. hard work and devotion'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>Homeschooling vs School</strong><br><br>
+Many kids find it hard to concentrate in school. Classmates, bells, and even cheerful decorations in school can make it hard for some children to concentrate. ______(26)______<br><br>
+In some schools, conditions are bad for children's safety and health. ______(27)______ Homeschooling parents can control their children's environment to make sure it is safe and healthy.<br><br>
+When students sit in a classroom surrounded by classmates, under the tight control of adults, they find it very hard to function in a normal way. Homeschooling children don't have to stay in the school. ______(28)______ They can interact with people in familiar situations, and they feel they can interact with people as adults.<br><br>
+School bullying (以强欺弱) is a serious problem. ______(29)______ Although schools are starting to deal with this problem, many kids are still afraid of going to school. Homeschooling kids can choose who they associate with and walk away from an uncomfortable situation.<br><br>
+Schools are cutting field trips. ______(30)______ On the contrary, homeschooling can move outdoors, to the beach or the zoo. For homeschooling families, the whole world is a classroom. Learning takes place everywhere and it never ends.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. Instead, they are out in the community.'},
+            {val:'B', text:'B. In this case, homeschooling offers fewer interruptions.'},
+            {val:'C', text:'C. Children usually sit at desks or around the kitchen tables.'},
+            {val:'D', text:'D. Some children do not treat their classmates appropriately.'},
+            {val:'E', text:'E. Many students go to class in old or poorly-designed buildings.'},
+            {val:'F', text:'F. Even a short trip to the countryside is controversial in some places.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Planting Potatoes</strong><br><br>
+When I was a boy we had several gardens around our old house. The largest one of all was used just for growing potatoes.<br><br>
+I can still remember those potato planting days. All the family ____31____ helped. After my Dad had ____32____ the soil, my Mom, brothers, and I went to work. It was my ____33____ to drop the little seed potatoes in the ____34____ while my Mom dropped handfuls of fertilizer beside them. My brothers then covered them all with the ____35____ turned earth.<br><br>
+For months ____36____ I would glance over at the garden while I played outside and wonder what was going on underneath the ____37____. When the harvest time came I was amazed at the huge size of the potatoes my Dad ____38____ out of the soil. Those little seed potatoes had grown into big potatoes. They would be turned into meal after meal of ____39____ food. They would keep the ____40____ family well fed throughout the whole year. It truly was a miracle.`;
+        const optList = [
+            {val:'A', text:'A. true'}, {val:'B', text:'B. ground'}, {val:'C', text:'C. members'},
+            {val:'D', text:'D. job'}, {val:'E', text:'E. delicious'}, {val:'F', text:'F. prepared'},
+            {val:'G', text:'G. rows'}, {val:'H', text:'H. afterward'}, {val:'I', text:'I. freshly'},
+            {val:'J', text:'J. entire'}, {val:'K', text:'K. tools'}, {val:'L', text:'L. pulled'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Workplace English Learning</strong><br><br>
+English __plays__ (play) an important role in the workplace. When __41__(use) correctly and appropriately, it will be __42__(help) in developing a career or a business. Some may need or want to study business English before they start their __43__(career). Those who are already __44__(work) have the opportunity to see what they can and cannot do __45__(effective) with English in their current job.<br><br>
+A __46__(value) skill to have in business is how to negotiate. You need to know what you want, as well as how to bargain and make concessions (让步). Being able to deal with a conflict and __47__(know) how to end negotiations can make a big __48__(different) to the outcome.<br><br>
+Workplace English learning will encourage __49__(profession) and efficient communication. It can better serve customers, business partners and __50__(supplier), and it will be a positive push for any business.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

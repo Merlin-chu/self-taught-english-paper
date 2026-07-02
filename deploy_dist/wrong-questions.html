@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错题本 - 自考英语刷题平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh; padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            background: #fff; border: 1px solid #ddd; padding: 24px 32px; margin-bottom: 20px;
+        }
+        .header h1 { font-size: 1.3rem; color: #000; margin-bottom: 8px; }
+        .header p { font-size: 0.9rem; color: #666; }
+        .filter-bar {
+            background: #fff; border: 1px solid #ddd; padding: 16px 24px;
+            margin-bottom: 16px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+        }
+        .filter-bar label { font-size: 0.85rem; color: #555; }
+        .filter-bar select {
+            padding: 6px 12px; border: 1px solid #ccc; font-size: 0.85rem;
+        }
+        .filter-bar .btn-export {
+            margin-left: auto; padding: 8px 20px; background: #1a1a2e; color: #fff;
+            border: none; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 500; transition: background 0.2s;
+        }
+        .filter-bar .btn-export:hover { background: #16213e; }
+        .question-list { background: #fff; border: 1px solid #ddd; }
+        .question-item { padding: 20px 24px; border-bottom: 1px solid #eee; }
+        .question-item:last-child { border-bottom: none; }
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;
+        }
+        .question-meta { font-size: 0.8rem; color: #888; }
+        .question-meta span { margin-right: 12px; }
+        .question-part {
+            background: #f0f0f0; padding: 2px 8px; font-size: 0.75rem; color: #555;
+        }
+        .answer-compare {
+            display: flex; gap: 24px; font-size: 0.9rem; margin-bottom: 12px;
+        }
+        .your-answer { color: #b91c1c; }
+        .your-answer strong { font-weight: 700; }
+        .correct-answer { color: #2c7d64; }
+        .correct-answer strong { font-weight: 700; }
+        .explanation {
+            background: #f8f8f8; padding: 12px 16px; font-size: 0.85rem;
+            color: #555; line-height: 1.6; border-left: 3px solid #ddd;
+        }
+        .answer-time { font-size: 0.75rem; color: #aaa; margin-top: 6px; }
+        .question-actions { margin-top: 12px; }
+        .mark-btn {
+            padding: 6px 14px; background: #f0f0f0; border: 1px solid #ccc;
+            font-size: 0.8rem; color: #555; cursor: pointer;
+        }
+        .mark-btn:hover { background: #e0e0e0; }
+        .redo-link {
+            display: inline-block; margin-left: 12px; font-size: 0.8rem;
+            color: #333; text-decoration: none;
+        }
+        .redo-link:hover { text-decoration: underline; }
+        .empty-state { padding: 60px 24px; text-align: center; color: #888; }
+        .empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+        .empty-state p { font-size: 1rem; margin-bottom: 16px; }
+        .empty-state a {
+            color: #333; text-decoration: none; border-bottom: 1px solid #333; padding-bottom: 2px;
+        }
+        .login-prompt {
+            background: #fff; border: 1px solid #ddd; padding: 60px 24px; text-align: center;
+        }
+        .login-prompt p { font-size: 1rem; color: #555; margin-bottom: 20px; }
+        .login-prompt a {
+            display: inline-block; padding: 12px 24px; background: #333;
+            color: #fff; text-decoration: none; font-weight: 600;
+        }
+        .login-prompt a:hover { background: #555; }
+        .back-link { display: inline-block; margin-top: 20px; color: #666; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #333; }
+        .summary-bar {
+            background: #fff; border: 1px solid #ddd; padding: 12px 24px;
+            margin-bottom: 16px; font-size: 0.85rem; color: #555;
+        }
+        .summary-bar strong { color: #333; }
+
+        /* ====== 打印样式（导出 PDF） ====== */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { max-width: 100%; }
+            .filter-bar, .question-actions, .back-link, .summary-bar,
+            #loginPrompt, #noPrint { display: none !important; }
+            .header { border: none; padding: 16px 0; margin-bottom: 12px; }
+            .question-item { padding: 12px 0; page-break-inside: avoid; }
+            .question-list { border: none; }
+            .explanation { background: #fcfcfc; }
+            .your-answer { color: #000; }
+            .correct-answer { color: #000; }
+            @page { margin: 1.5cm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>错题本</h1>
+            <p>回顾做错的题目，针对性练习提高成绩</p>
+        </div>
+
+        <div id="loginPrompt" class="login-prompt" style="display:none;">
+            <p>请先登录后查看错题本</p>
+            <a href="login.html">去登录</a>
+        </div>
+
+        <div id="content" style="display:none;">
+            <div class="summary-bar" id="summaryBar"></div>
+
+            <div class="filter-bar" id="noPrint">
+                <label>考试：</label>
+                <select id="examFilter">
+                    <option value="">全部考试</option>
+                </select>
+                <label>题型：</label>
+                <select id="partFilter">
+                    <option value="">全部题型</option>
+                    <option value="p1">阅读判断</option>
+                    <option value="p2">阅读选择</option>
+                    <option value="task1">段落标题</option>
+                    <option value="task2">补全句子</option>
+                    <option value="part4">填句补文</option>
+                    <option value="part5">填词补文</option>
+                    <option value="part6">完形补文</option>
+                </select>
+                <button class="btn-export" id="exportPdfBtn" onclick="exportPDF()">
+                    打印 / 导出 PDF
+                </button>
+            </div>
+
+            <div class="question-list" id="questionList">
+                <div class="empty-state">
+                    <p>加载中...</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="profile.html" class="back-link" id="noPrint">← 返回个人中心</a>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // 变量必须先于 IIFE 声明，否则 TDZ 报错
+        const partNames = {
+            'p1': '阅读判断',
+            'p2': '阅读选择',
+            'task1': '段落标题',
+            'task2': '补全句子',
+            'part4': '填句补文',
+            'part5': '填词补文',
+            'part6': '完形补文'
+        };
+        let allQuestions = [];
+
+        // 安全等待 app.js 加载，带超时兜底
+        (function waitForApp(retryCount) {
+            retryCount = (retryCount || 0) + 1;
+
+            if (typeof QuizApp === 'undefined') {
+                if (retryCount > 100) {
+                    // 3 秒后仍未加载，显示错误
+                    var el = document.getElementById('questionList');
+                    if (el) el.innerHTML = '<div class="empty-state"><p style="color:#b91c1c;">核心模块加载失败，请刷新页面重试</p></div>';
+                    document.getElementById('content') && (document.getElementById('content').style.display = 'block');
+                    return;
+                }
+                setTimeout(function () { waitForApp(retryCount); }, 50);
+                return;
+            }
+
+            var loginPrompt = document.getElementById('loginPrompt');
+            var content = document.getElementById('content');
+
+            if (!QuizApp.User.isLoggedIn()) {
+                loginPrompt.style.display = 'block';
+                return;
+            }
+
+            content.style.display = 'block';
+
+            try {
+                init();
+            } catch (e) {
+                console.error('[错题本] 初始化失败:', e);
+                var el = document.getElementById('questionList');
+                if (el) el.innerHTML = '<div class="empty-state"><p style="color:#b91c1c;">数据加载出错，请尝试清除缓存后重试</p><p style="font-size:0.8rem;color:#999;">错误: ' + e.message + '</p></div>';
+            }
+        })();
+
+        function init() {
+            loadWrongQuestions();
+            document.getElementById('examFilter').addEventListener('change', applyFilters);
+            document.getElementById('partFilter').addEventListener('change', applyFilters);
+        }
+
+        function loadWrongQuestions() {
+            try {
+                allQuestions = QuizApp.Data.getWrongQuestions() || [];
+            } catch (e) {
+                console.error('[错题本] 读取错题数据失败:', e);
+                allQuestions = [];
+            }
+            populateExamFilter();
+            updateSummary();
+            applyFilters();
+        }
+
+        function populateExamFilter() {
+            const exams = [...new Set(allQuestions.map(q => q.examYear + '年' + q.examMonth + '月'))];
+            exams.sort();
+            const select = document.getElementById('examFilter');
+            // 保留第一个 option（全部考试），清空其余
+            while (select.options.length > 1) select.remove(1);
+            exams.forEach(function (exam) {
+                const option = document.createElement('option');
+                option.value = exam;
+                option.textContent = exam;
+                select.appendChild(option);
+            });
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryBar').innerHTML =
+                '共 <strong>' + allQuestions.length + '</strong> 道错题，' +
+                '<span style="margin-left:12px;">点击「已掌握」可移出错题本</span>';
+        }
+
+        function applyFilters() {
+            const examFilter = document.getElementById('examFilter').value;
+            const partFilter = document.getElementById('partFilter').value;
+
+            let filtered = allQuestions;
+
+            if (examFilter) {
+                filtered = filtered.filter(function (q) {
+                    return (q.examYear + '年' + q.examMonth + '月') === examFilter;
+                });
+            }
+            if (partFilter) {
+                filtered = filtered.filter(function (q) { return q.part === partFilter; });
+            }
+
+            renderQuestions(filtered);
+        }
+
+        function renderQuestions(questions) {
+            var list = document.getElementById('questionList');
+            if (!list) return;
+
+            if (!questions || questions.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">&#127881;</div>
+                        <p>暂无错题</p>
+                        <a href="index.html">去刷题</a>
+                    </div>`;
+                return;
+            }
+
+            list.innerHTML = questions.map(function (q) {
+                var timeStr = q.answeredAt ? new Date(q.answeredAt).toLocaleString('zh-CN') : '';
+                var examLabel = (q.examYear || '?') + '年' + (q.examMonth || '?') + '月';
+                return `
+                    <div class="question-item">
+                        <div class="question-header">
+                            <div class="question-meta">
+                                <span>${examLabel}</span>
+                                <span class="question-part">${partNames[q.part] || q.part}</span>
+                                <span>第 ${q.questionNum} 题</span>
+                            </div>
+                        </div>
+                        <div class="answer-compare">
+                            <span class="your-answer">你的答案：<strong>${escapeHtml(q.userAnswer)}</strong></span>
+                            <span class="correct-answer">正确答案：<strong>${escapeHtml(q.correctAnswer)}</strong></span>
+                        </div>
+                        ${q.explanation ? '<div class="explanation">' + escapeHtml(q.explanation) + '</div>' : ''}
+                        ${timeStr ? '<div class="answer-time">答题时间：' + timeStr + '</div>' : ''}
+                        <div class="question-actions">
+                            <button class="mark-btn" onclick="markReviewed(' + q.examYear + ',' + q.examMonth + ',\'' + q.part + '\',' + q.questionNum + ')">已掌握，移出错题本</button>
+                            <a href="' + examLabel + '.html" class="redo-link">重新做这份试卷 →</a>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function markReviewed(examYear, examMonth, part, questionNum) {
+            QuizApp.Data.markAsReviewed(examYear, examMonth, part, questionNum);
+            allQuestions = allQuestions.filter(function (q) {
+                return !(q.examYear === examYear && q.examMonth === examMonth && q.part === part && q.questionNum === questionNum);
+            });
+            updateSummary();
+            applyFilters();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function exportPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

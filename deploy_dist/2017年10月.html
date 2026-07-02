@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2017年10月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 { font-size: 1.5rem; margin: 0 0 10px; color: #000; text-align: center; font-weight: bold; }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active { background: #333; color: white; }
+        .score-badge { font-weight: 600; color: #333; }
+        section { margin-bottom: 36px; }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p { margin: 12px 0; }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct { color: #2c7d64; border-left-color: #2c7d64; display: block; }
+        .feedback.wrong { color: #b91c1c; border-left-color: #b91c1c; display: block; }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2017年10月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+    <div class="top-bar">
+        <span><a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">微信公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>My Writing Teacher</strong><br><br>
+                English writing was always easy for me, but that changed on the first day I walked into Mrs. Johnson's class. Before that, I'd heard rumors from former students. They said she was strict and her class was hard to pass. So I was very nervous.<br><br>
+                The first time we met, Mrs. Johnson told us her class would be difficult, but she would give us new "tools" and guide us through. She explained that her grading system was different, and that we would not see high scores soon. "Everything you do in class matters," she said. "As writing is an art, it takes a long time to perfect."<br><br>
+                Mrs. Johnson scared me. I was afraid of what she would say if I asked a question. So in class I kept silent most of the time and couldn't follow her. When I got my first essay back, my grade was terrible. I was annoyed with Mrs. Johnson. I disliked going to her class.<br><br>
+                Then I realized I needed to find out what I could do to improve my grade and how to use the "tools" in my writing. As I still didn't dare to talk to Mrs. Johnson in person, I e-mailed her. In this way, she and I worked together to improve my writing. By and by, I could talk to her both online and in person. She walked me through every step to understand how to write an essay. Together we saw improvement in my work.<br><br>
+                From this I discovered that asking for help could actually work. Behind everything Mrs. Johnson was saying, she actually cared about me and where I would be in the future. She knocked me down so that I could climb back stronger.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>The Kilt</strong><br><br>
+                Whenever people from Scotland live in foreign countries, they are always asked: "Is Scotland that place where men wear skirts?" The short answer is yes, but there is more about the myths of Scottish "skirts."<br><br>
+                The "skirt" that Scotsmen sometimes wear is called a kilt. It is part of the traditional dress of Scotland. The kilt is clearly very famous across the world. It seems that everybody has heard of it, and that most people have seen a picture of a man wearing one.<br><br>
+                People's knowledge and ideas about Scotsmen wearing these funny kilts come from films and television. Every time people from other countries ask about the kilt, they mention Mel Gibson's film, <em>Braveheart</em>. In many countries, there are television programmes about Scotland. These programmes always include information or images of men in kilts.<br><br>
+                Of course, in Scotland, you will often see the kilt. The reality is, though, that you will most commonly see it in tourist areas. The main streets and tourist areas of Scotland always have a Scotsman wearing a kilt and all tourist shops in the country sell kilts in different colours.<br><br>
+                But kilts are not something that Scottish people see every day. Kilts are for special occasions, such as weddings, funerals and other big and important events. Scotsmen do not put on their kilt just to buy a bottle of milk and a loaf of bread at the local supermarket.<br><br>
+                The reason for this may be that kilts are very expensive. When a man wears a kilt, he normally wears it with a special shirt, jacket, socks and shoes. This is obviously not cheap. In fact, an average kilt outfit costs around £500.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>A Fighting Lady</strong><br><br>
+                ① Deborah Sampson was born in 1760. There were many children in her family and they were poor. When Deborah was just a young girl, her father left and went off to sea. Being in poor health, her mother could not care for her children. So she sent them to live with different relatives, hoping these people would take care of her children.<br><br>
+                ② Young Deborah, less than seven years old, had to work for a farmer. On the farm, she learned to ride and hunt. She did housework as well. Life was difficult, but Deborah worked hard and grew strong. The farmer had ten sons, and Deborah helped to take care of them. In the evening, she had the boys talk about their lessons with her. By this she learned what they learned. She also borrowed their school books to read every night. When she was 18, Deborah became a teacher.<br><br>
+                ③ Soon after she started her new career, the American Revolution began. She wanted to fight for her country, but women could not be soldiers at that time. Deborah had a plan. She was tall for a woman of that time. She made herself a man's suit and secretly practiced walking and talking like a man. Finally, she joined the army using the name Robert.<br><br>
+                ④ "Robert" was a brave soldier. He fought with courage in every battle, and other soldiers respected him. They never suspected that their fellow soldier was a woman. Once he caught a fever and had to go to the hospital. There a doctor found out that Robert was actually a woman. Deborah then had to leave the army, but she was not punished. Some people say she even met General George Washington before she left.<br><br>
+                ⑤ Later, Deborah married a farmer and had three children. She taught in school and gave lectures about her time in the army till retirement. Deborah died at the age of 66. She was a true American hero.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div class="full-text" id="part4Static">
+                <p><strong>My Major Problem</strong></p>
+                <p>Decision-making is something I struggle with. In fact, I'd rather have someone else make decisions for me.</p>
+                <p>As I sat in a crowded information session at a college last summer, I was again faced with the pressure of making a decision. 
+                <select id="part4_26" data-qid="part4_26"><option value="">--选择句子--</option><option value="C">C. The admissions officer asked us to introduce ourselves briefly.</option><option value="A">A. Everyone before me had declared a major.</option><option value="D">D. In the end, only one brave person said she was undecided.</option><option value="B">B. So I've narrowed my list down to anything but medicine.</option><option value="F">F. However, I'm confident I'll find a solution.</option></select>
+                <span id="fb_inline_26" class="inline-feedback"></span> He then asked each of us to give our intended major. I looked at my mother with panic.</p>
+                <p>"A major?" I said. "I can't even decide what socks to wear to school!"</p>
+                <p>I wanted to say I was undecided. But as my turn to speak approached, my confidence decreased. 
+                <select id="part4_27" data-qid="part4_27"><option value="">--选择句子--</option><option value="C">C. The admissions officer asked us to introduce ourselves briefly.</option><option value="A">A. Everyone before me had declared a major.</option><option value="D">D. In the end, only one brave person said she was undecided.</option><option value="B">B. So I've narrowed my list down to anything but medicine.</option><option value="F">F. However, I'm confident I'll find a solution.</option></select>
+                <span id="fb_inline_27" class="inline-feedback"></span> I watched the girl in front of me. She was searching for some obscure major. I realized I couldn't just say undecided. So, when my turn came, I uneasily said, "I want to major in business." I could feel "liar" written all over my face.</p>
+                <p>
+                <select id="part4_28" data-qid="part4_28"><option value="">--选择句子--</option><option value="C">C. The admissions officer asked us to introduce ourselves briefly.</option><option value="A">A. Everyone before me had declared a major.</option><option value="D">D. In the end, only one brave person said she was undecided.</option><option value="B">B. So I've narrowed my list down to anything but medicine.</option><option value="F">F. However, I'm confident I'll find a solution.</option></select>
+                <span id="fb_inline_28" class="inline-feedback"></span> I felt ashamed. "Why couldn't I have said that?" I thought. The admissions adviser even said that a lot of people are uncertain. That is why students have to decide until the end of the second year.</p>
+                <p>I have no idea what I want to do with my life. All I know is that I don't want to do anything that involves blood. 
+                <select id="part4_29" data-qid="part4_29"><option value="">--选择句子--</option><option value="C">C. The admissions officer asked us to introduce ourselves briefly.</option><option value="A">A. Everyone before me had declared a major.</option><option value="D">D. In the end, only one brave person said she was undecided.</option><option value="B">B. So I've narrowed my list down to anything but medicine.</option><option value="F">F. However, I'm confident I'll find a solution.</option></select>
+                <span id="fb_inline_29" class="inline-feedback"></span> This isn't really narrowing it down. I've been told many people start college with one major, and graduate with a degree in something totally different.</p>
+                <p>After my experience at the information session, I've learned not to be afraid of saying I'm "undecided." I know now that I am not the only one uncertain about future studies. I'm still experiencing a "major" problem. 
+                <select id="part4_30" data-qid="part4_30"><option value="">--选择句子--</option><option value="C">C. The admissions officer asked us to introduce ourselves briefly.</option><option value="A">A. Everyone before me had declared a major.</option><option value="D">D. In the end, only one brave person said she was undecided.</option><option value="B">B. So I've narrowed my list down to anything but medicine.</option><option value="F">F. However, I'm confident I'll find a solution.</option></select>
+                <span id="fb_inline_30" class="inline-feedback"></span></p>
+            </div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div class="full-text" id="part5Static">
+                <p><strong>Choosing Friends</strong></p>
+                <p>In our daily life, it's nice to have friends. While family is 
+                <select id="part5_31" class="inline-select" data-qid="part5_31"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_31" class="inline-feedback"></span> important, friends are a different support system of your choosing. As the 
+                <select id="part5_32" class="inline-select" data-qid="part5_32"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_32" class="inline-feedback"></span> goes, "You can't choose your family, but you can choose your friends." Choosing them wisely can 
+                <select id="part5_33" class="inline-select" data-qid="part5_33"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_33" class="inline-feedback"></span> your life more exciting and inspiring.</p>
+                <p>Deciding whom you choose as your friends says as much about you as it does them. You may choose your friends 
+                <select id="part5_34" class="inline-select" data-qid="part5_34"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_34" class="inline-feedback"></span> on similar interests. You may choose them because you're opposites of each other and find this interesting. Often, friends become "friends" because they are naturally attracted towards each other due to 
+                <select id="part5_35" class="inline-select" data-qid="part5_35"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_35" class="inline-feedback"></span> personalities. Sometimes it's just circumstances that bring two individuals together who then become friends.</p>
+                <p>Whatever prompts a friendship, developing one is a very 
+                <select id="part5_36" class="inline-select" data-qid="part5_36"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_36" class="inline-feedback"></span> experience. This is especially true when, before you know it, a certain 
+                <select id="part5_37" class="inline-select" data-qid="part5_37"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_37" class="inline-feedback"></span> turns into a unique lifelong close friendship. Again, it's been said that a person 
+                <select id="part5_38" class="inline-select" data-qid="part5_38"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_38" class="inline-feedback"></span> has only a couple of very close friends in their life. Think of whom you 
+                <select id="part5_39" class="inline-select" data-qid="part5_39"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_39" class="inline-feedback"></span> as truly close friends. These are those few individuals you can 
+                <select id="part5_40" class="inline-select" data-qid="part5_40"><option value="">--选词--</option><option value="L">L. extremely</option><option value="A">A. saying</option><option value="B">B. make</option><option value="K">K. based</option><option value="D">D. similar</option><option value="J">J. rewarding</option><option value="H">H. relationship</option><option value="C">C. normally</option><option value="G">G. consider</option><option value="E">E. trust</option></select>
+                <span id="fb_inline_40" class="inline-feedback"></span> and share deep thoughts and concerns with.</p>
+            </div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div class="full-text" id="part6Static">
+                <p><strong>Bats</strong></p>
+                <p>Many people think bats look frightening. But research has <input type="text" id="part6_41" data-qid="part6_41" placeholder="show" style="width:100px;"> <span id="fb_inline_41" class="inline-feedback"></span> us that bats are kind animals. The way they live <input type="text" id="part6_42" data-qid="part6_42" placeholder="provide" style="width:100px;"> <span id="fb_inline_42" class="inline-feedback"></span> a great deal of help to humans and other <input type="text" id="part6_43" data-qid="part6_43" placeholder="live" style="width:100px;"> <span id="fb_inline_43" class="inline-feedback"></span> things.</p>
+                <p>Bats are gentle and loving. Mother bats sleep with their wings around their <input type="text" id="part6_44" data-qid="part6_44" placeholder="baby" style="width:100px;"> <span id="fb_inline_44" class="inline-feedback"></span> to protect them, and will move them to <input type="text" id="part6_45" data-qid="part6_45" placeholder="safe" style="width:100px;"> <span id="fb_inline_45" class="inline-feedback"></span> if they seem to be <input type="text" id="part6_46" data-qid="part6_46" placeholder="threaten" style="width:100px;"> <span id="fb_inline_46" class="inline-feedback"></span> in any way. Just like other animals, adult bats help their children find <input type="text" id="part6_47" data-qid="part6_47" placeholder="suit" style="width:100px;"> <span id="fb_inline_47" class="inline-feedback"></span> food to eat.</p>
+                <p>Bats are <input type="text" id="part6_48" data-qid="part6_48" placeholder="help" style="width:100px;"> <span id="fb_inline_48" class="inline-feedback"></span>, too. Some bats eat insects. Just one brown bat can eat <input type="text" id="part6_49" data-qid="part6_49" placeholder="near" style="width:100px;"> <span id="fb_inline_49" class="inline-feedback"></span> 600 insects in one hour! Besides, many species are even dependent on bats for their <input type="text" id="part6_50" data-qid="part6_50" placeholder="survive" style="width:100px;"> <span id="fb_inline_50" class="inline-feedback"></span>. Therefore, bats are really friendly animals!</p>
+            </div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "Exercise Every Day"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 坚持锻炼有哪些好处<br>2. 你能否坚持每天锻炼<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'B', 'A', 'B', 'C', 'B', 'C', 'B', 'C', 'A'],
+        p1Explain: [
+            "第1题：原文 'I was very nervous.' 第一节课很紧张 → 选True。",
+            "第2题：原文 'her grading system was different' 评分系统不同 → 选False。",
+            "第3题：原文 'As writing is an art' → 视写作为艺术 → 选True。",
+            "第4题：原文 'I kept silent most of the time' 一开始不活跃 → 选False。",
+            "第5题：文中未提及其他学生是否喜欢她的课 → Not Given。",
+            "第6题：原文 'my grade was terrible' 第一次成绩很差 → 选False。",
+            "第7题：原文提到作者发邮件，但未说Johnson更倾向邮件联系 → Not Given。",
+            "第8题：原文 'she and I worked together' 一起改进 → 选False。",
+            "第9题：文中未提到作者成为顶尖学生 → Not Given。",
+            "第10题：原文 'she actually cared about me and where I would be in the future' → 关心我的未来 → 选True。"
+        ],
+        p2: ['B', 'C', 'A', 'D', 'C'],
+        p2Explain: [
+            "第11题：原文 'The \"skirt\" that Scotsmen sometimes wear is called a kilt.' → 选B。",
+            "第12题：文中提到Mel Gibson's film Braveheart → 他是电影明星 → 选C。",
+            "第13题：原文 'you will most commonly see it in tourist areas' → 选A。",
+            "第14题：原文 'the reason for this may be that kilts are very expensive' → 选D。",
+            "第15题：全文主要讲苏格兰裙的种种说法（myths）→ 选C。"
+        ],
+        task1: ['F', 'B', 'E', 'D', 'C'],
+        task1Explain: [
+            "段落①：家庭背景 → F",
+            "段落②：农场生活 → B",
+            "段落③：参军 → E",
+            "段落④：军旅生活 → D",
+            "段落⑤：退役后生活 → C"
+        ],
+        task2: ['D', 'A', 'E', 'C', 'B'],
+        task2Explain: [
+            "第21题：因家庭无法抚养 → D",
+            "第22题：在农场自学 → A",
+            "第23题：伪装成男人 → E",
+            "第24题：医生发现秘密 → C",
+            "第25题：非凡的勇气 → B"
+        ],
+        part4: ['C', 'A', 'D', 'B', 'F'],
+        part4Explain: [
+            "第26空：招生官让我们介绍自己 → C",
+            "第27空：前面的人都宣布了专业 → A",
+            "第28空：最后只有一个勇敢的人说未决定 → D",
+            "第29空：缩小范围到除了医学以外的任何专业 → B",
+            "第30空：我相信我会找到解决方案 → F"
+        ],
+        part5: ['L', 'A', 'B', 'K', 'D', 'J', 'H', 'C', 'G', 'E'],
+        part5Explain: [
+            "31空：extremely important → L",
+            "32空：as the saying goes → A",
+            "33空：make your life more exciting → B",
+            "34空：based on → K",
+            "35空：similar personalities → D",
+            "36空：rewarding experience → J",
+            "37空：relationship → H",
+            "38空：normally → C",
+            "39空：consider → G",
+            "40空：trust → E"
+        ],
+        part6: ['shown', 'provides', 'living', 'babies', 'safety', 'threatened', 'suitable', 'helpful', 'nearly', 'survival'],
+        part6Explain: [
+            "41空：shown（过去分词）",
+            "42空：provides（三单）",
+            "43空：living（形容词）",
+            "44空：babies（复数）",
+            "45空：safety（名词）",
+            "46空：threatened（被动）",
+            "47空：suitable（形容词）",
+            "48空：helpful（形容词）",
+            "49空：nearly（副词）",
+            "50空：survival（名词）"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "I was worried when I was in Mrs. Johnson's first class.",
+            "Mrs. Johnson used the same grading system as other teachers.",
+            "Mrs. Johnson regards writing as an art.",
+            "I was active in class in the beginning.",
+            "Most students enjoyed Mrs. Johnson's class.",
+            "I got a high score for my first essay.",
+            "Mrs. Johnson preferred to email students.",
+            "Mrs. Johnson let me improve my writing by myself.",
+            "I finally became a top student in the writing class.",
+            "Mrs. Johnson cared about my future."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "According to the text, Scotsmen ______.",
+            "Mel Gibson is probably a ______.",
+            "In Scotland, kilts are more often seen ______.",
+            "People do not wear kilts every day probably because of their ______.",
+            "This text is mainly about the ______."
+        ];
+        const opts = [
+            ["A. like foreign culture", "B. sometimes wear kilts", "C. enjoy talking about kilts", "D. often visit foreign countries"],
+            ["A. painter", "B. musician", "C. movie star", "D. fashion designer"],
+            ["A. in tourist shops", "B. in public schools", "C. on the stage", "D. at local markets"],
+            ["A. funny designs", "B. dull colours", "C. poor quality", "D. high prices"],
+            ["A. history of kilts", "B. production of kilts", "C. myths of kilts", "D. styles of kilts"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Deborah\'s marriage', 'B. Deborah\'s life on the farm', 'C. Deborah\'s life after leaving the army', 'D. Deborah\'s military life', 'E. Deborah\'s joining the army', 'F. Deborah\'s family background'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Deborah was sent to others' home because ______.",
+            "Deborah became a teacher by ______.",
+            "Deborah went into the army by ______.",
+            "Deborah left the army after ______.",
+            "Deborah was a hero ______."
+        ];
+        const opts = ['A. teaching herself on the farm', 'B. for her unusual courage', 'C. a doctor discovered her secret', 'D. her family couldn\'t support her', 'E. dressing and behaving like a man', 'F. for her excellent teaching'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

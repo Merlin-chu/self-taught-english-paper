@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2021年4月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none; 
+            width: 100%; 
+            margin-top: 6px; 
+            font-size: 0.85rem; 
+            padding: 6px 10px; 
+            background: #eee; 
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+        
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2021年4月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+    
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Animals in the City</strong><br><br>
+                Recently, there have been many reports in newspapers and on TV about big animals coming into towns and cities. What happens when big animals come into our cities? Is it a good thing or is it dangerous for us and the animals?<br><br>
+                Wild animals usually come into cities to look for food. In Cape Town, South Africa, baboons (狒狒) sometimes come into the suburbs. They eat fruit from gardens and go into people's kitchens! Baboons are strong animals and sometimes they scare children and fight with pet dogs. Many people do not like them, but the city can be dangerous for baboons too. Sometimes, baboons are hurt in car accidents. The city council in Cape Town has a team of Baboon Monitors. Their job is to find baboons in the city and take them back to the countryside. The problem is that a lot of baboons will come back to the city to find food again.<br><br>
+                In Berlin, Germany, groups of wild pigs sometimes come into the city to look for food. They eat flowers and plants and dig in gardens and parks in the city. They also walk in the street and cause traffic accidents. Some city residents like the pigs and give them food. But the city council is worried about the traffic accidents. They have told people to stop giving the pigs food and have put up fences to stop the pigs from coming into the city.<br><br>
+                In Moscow, Russia, there are 35,000 wild dogs. They live in parks, empty houses, markets and train stations. Some of the dogs were pets that people did not want, so they left them on the streets. Others were born on the streets and have always lived there. A lot of people like them and are used to seeing them on the streets. They give the dogs food and water. They even build small huts for the dogs to live in during the very cold winter.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>What Happens When You Stop Exercising</strong><br><br>
+                Have you ever wondered what would happen if you stopped exercising? A new study on twins was published in the journal Medicine & Science. The results of the study are dramatic.<br><br>
+                In the study, researchers looked at 10 pairs of twin men. Each set of twins was in their mid-30s. Each had been brought up in the same family. Since they were identical, they shared the same DNA. They had maintained the same level of physical activity for most of their lives. But there was one difference. One twin of each set had cut on exercising in the past few years due to work or family pressure. On average, the less active twin exercised less than twice a week, while the active twin exercised at least twice a week. The research team put each twin through a set of medical tests to study their overall health.<br><br>
+                The results showed big differences. While the more active twins had lower body fat percentage, better endurance level, and normal sensitivity, the inactive twins had about seven more pounds of body fat, worse endurance, and signs of disease. Not only were their bodies different; their brains were different as well. The active twins had more gray matter (the information processing part of the brain), particularly in areas that control balance.<br><br>
+                The conclusion of the study is clear. Quitting your fitness routine can bring negative effects to your body and your brain as well. Considering the less active twins in the study had become couch potatoes (沉溺于看电视的人) only recently, these changes can sneak up on you a lot sooner than you'd think. So keep exercising. It is beneficial to your overall health!
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Surviving Illness Away From Home</strong><br><br>
+                ①Pampering (娇惯) yourself is always a good start. If you feel so ill and tired that you can't even get out of bed, then don't! Make a trip to the kitchen and stock up on fluids and try to make yourself some hot food. The key to getting better is to drink lots of fluids. Water and hot drinks such as green tea and soup are usually the best things.<br><br>
+                ②Try to distract yourself from feeling horrible. If you have a TV, watch one of your favorite films or TV series. If you don't have a TV, maybe put the radio on. If you have a headache and all the noise is too much to handle, try reading the book you've always wanted to read but never had the time to. Being ill doesn't have to be the worst day in the world!<br><br>
+                ③Tell your friends and family that you are ill. Sometimes there is nothing better than hearing words of comfort from loved ones who feel sorry for you and want to cheer you up and make you happy. There is nothing wrong with a little attention from others when you're ill. Who knows, they might even be willing to travel and visit you with lots of "Get Well" presents like your favorite food, magazine or flowers.<br><br>
+                ④When you do arrive at a new place where you will be staying for a few months, make sure you know exactly where the nearest drugstore is. If you are in a foreign country, it might be best to translate a few useful phrases before you start asking for a cure.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~19) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (20~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "My Favorite Chinese Festival"</div>
+            <p style="margin-bottom:10px;"><strong>题目：</strong> 假设你的美国朋友 John 给你发来一封电子邮件，表示他对中国传统文化很感兴趣，希望你能为他简要介绍一个中国的传统节日 (Traditional Chinese Festival)。以下是你给他回复邮件的主要内容：</p>
+            <ul style="margin-bottom:10px; padding-left:20px;">
+                <li>节日名称</li>
+                <li>节日由来</li>
+                <li>人们如何庆祝这一节日</li>
+            </ul>
+            <p style="margin-bottom:10px;"><strong>署名：</strong> Li Ke</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'B', 'C', 'B', 'A', 'C', 'A', 'C', 'B', 'A'],
+        p1Explain: [
+            "第1题：原文首句 'Recently, there have been many reports in newspapers and on TV about big animals coming into towns and cities.' → 正确，选True。",
+            "第2题：原文说动物来城市找食物，未提及为了过冬 → False。",
+            "第3题：文中未提及厨房食物对狒狒有害 → Not Given。",
+            "第4题：文中提到 'the city can be dangerous for baboons too'，且狒狒会被车撞 → 不安全，选False。",
+            "第5题：原文 'a lot of baboons will come back to the city to find food again.' → 选True。",
+            "第6题：未提及柏林野猪数量变化 → Not Given。",
+            "第7题：原文 'cause traffic accidents' → 选True。",
+            "第8题：未提及何时开始 → Not Given。",
+            "第9题：原文明确说 'there are 35,000 wild dogs'，所以有人知道数量 → False。",
+            "第10题：原文 'build small huts for the dogs to live in during the very cold winter' → 帮助过冬，选True。"
+        ],
+        p2: ['B', 'A', 'B', 'D', 'C'],
+        p2Explain: [
+            "第11题：文章主要讲停止锻炼带来的负面影响，即运动的作用 → B。",
+            "第12题：选双胞胎是因为他们基因相同 → A。",
+            "第13题：双胞胎差异在于锻炼频率（active vs less active）→ B。",
+            "第14题：更活跃的双胞胎有更好的耐力 (better endurance) → D。",
+            "第15题：sneak up on 意为悄悄影响 (affect)，选C。"
+        ],
+        task1: ['A', 'C', 'E', 'D'],
+        task1Explain: [
+            "段落①：首句讲娇惯自己，即照顾好自己 → A",
+            "段落②：首句讲分散注意力 → C",
+            "段落③：首句讲告诉朋友家人 → E",
+            "段落④：讲知道药店位置和如何买药 → D"
+        ],
+        task2: ['D', 'B', 'C', 'F', 'A', 'E'],
+        task2Explain: [
+            "第20题：离家生病是可怕经历 (a terrible experience) → D",
+            "第21题：按自己的节奏恢复 (at your own pace) → B",
+            "第22题：水与热饮是最好的治疗 → C",
+            "第23题：无法忍受电视噪音时，读喜欢的书 → F",
+            "第24题：翻译有用短语帮助买药 (ask for medicine) → A",
+            "第25题：在附近药店买药 (at a nearby drugstore) → E"
+        ],
+        part4: ['C', 'E', 'F', 'B', 'A'],
+        part4Explain: [
+            "第26空：前文说银行系统，后文讲历史，填入C（私人银行在该国有悠久传统）。",
+            "第27空：前文讲纳粹存钱，后文说瑞士银行受欢迎的原因，填入E（动荡地区的外国人也存钱）。",
+            "第28空：前文说受欢迎有许多原因，后文列举经济稳定等，填入F（首先，国家经济稳定繁荣）。",
+            "第29空：前文讲法律禁止透露账户持有人，后文说泄露犯罪，填入B（银行严格保护客户隐私）。",
+            "第30空：前文说瑞士政府受压，后文说要求揭露罪犯名字，填入A（他们督促改变银行法）。"
+        ],
+        part5: ['K', 'E', 'I', 'H', 'G', 'D', 'L', 'C', 'B', 'A'],
+        part5Explain: [
+            "31空：attend school（上学）→ K",
+            "32空：free（免费的教育）→ E",
+            "33空：choices（许多选择）→ I",
+            "34空：value（价值）→ H",
+            "35空：then（然后）→ G",
+            "36空：means（意味着）→ D",
+            "37空：colleges（学院）→ L",
+            "38空：quickly（迅速地）→ C",
+            "39空：students（学生）→ B",
+            "40空：meet（满足需求）→ A"
+        ],
+        part6: ['encouraged', 'requires', 'healthy', 'vegetables', 'equally', 'embarrassed', 'failures', 'attractive', 'impossible', 'comfortable'],
+        part6Explain: [
+            "41空：be encouraged to → encouraged",
+            "42空：requires（需要）三单",
+            "43空：healthy（健康的）",
+            "44空：vegetables（蔬菜）复数",
+            "45空：equally（同样地）副词",
+            "46空：embarrassed（尴尬的）",
+            "47空：failures（失败）复数",
+            "48空：attractive（有吸引力的）",
+            "49空：impossible（不可能的）— 加前缀im-",
+            "50空：comfortable（舒适的）"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "Many news reports concern big animals in the city.",
+            "Wild animals often come into cities for the winter.",
+            "The food in kitchens can be bad for baboons.",
+            "Cape Town is a safe place for baboons.",
+            "Many baboons will return after being sent away from the city.",
+            "There are more wild pigs in Berlin now than in the past.",
+            "Wild pigs sometimes cause traffic problems in Berlin.",
+            "Wild pigs started to come into Berlin years ago.",
+            "No one knows the number of wild dogs in Moscow.",
+            "Some people help the wild dogs survive the cold winter."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "This text is mainly about ______.",
+            "Researchers chose twins for their study mostly because they ______.",
+            "The twins in the study differed in ______.",
+            "The study found that the more active twins became ______.",
+            "The phrase 'sneak up on' (Para.4) most probably means ______."
+        ];
+        const opts = [
+            ["A. the importance of DNA", "B. the role of exercise", "C. the birth of a new journal", "D. the difference between twins"],
+            ["A. shared the same DNA", "B. looked alike", "C. had the same lifestyle", "D. grew up together"],
+            ["A. sleeping habits", "B. exercise frequency", "C. working hours", "D. food preference"],
+            ["A. less creative", "B. less sensitive", "C. more emotional", "D. more endurable"],
+            ["A. protect", "B. attack", "C. affect", "D. benefit"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Taking good care of yourself', 'B. Staying in bed for the entire day', 'C. Taking your attention away from illness', 'D. Knowing where and how to get medicine', 'E. Informing friends and family of your illness'];
+        for(let i=16;i<=19;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Being sick away from home is ______.",
+            "You are advised to recover ______.",
+            "The best cure for illness is ______.",
+            "If you cannot bear the noise from TV, ______.",
+            "A few useful translated phrases help you ______.",
+            "You can buy medicine ______."
+        ];
+        const opts = ['A. ask for medicine', 'B. at your own pace', 'C. water and hot drinks', 'D. a terrible experience', 'E. at a nearby drugstore', 'F. read your favorite book', 'G. suffer from a cold'];
+        for(let i=20;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-20]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>Swiss Banks</strong><br><br>
+Switzerland is well-known for chocolate and its watch-making industry. It is even more famous for its unique banking and financial system. ______(26)______<br><br>
+Banking in Switzerland goes back to the 18th century. In the past, not only rich people but also dictators (独裁者) kept their money in Swiss banks. During World War II German Nazis (纳粹) put much of their money in Switzerland. ______(27)______<br><br>
+Swiss banks are popular for many reasons. ______(28)______ It enjoys one of the highest per capita (人均) incomes in the world. It has been neutral for many centuries, especially during the two world wars. In addition, the Swiss franc is one of the most stable currencies in the world.<br><br>
+Most importantly, Swiss banks follow very strict privacy rules. In 1934, a law was passed that forbade Swiss banks to reveal the names of account holders. ______(29)______ If a Swiss banker reveals a person's bank account without permission, he or she commits a crime. Such regulations have made Switzerland a popular destination for many people.<br><br>
+Lately, however, the Swiss government has been under heavy pressure from other countries. ______(30)______ They want the banks to reveal the names of possible criminals.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. They urge it to change its bank laws.'},
+            {val:'B', text:'B. Banks strictly protect the privacy of their clients.'},
+            {val:'C', text:'C. Private banking has a long tradition in the country.'},
+            {val:'D', text:'D. Banks play an important role in Switzerland\'s economy.'},
+            {val:'E', text:'E. Foreigners in troubled areas also kept money in Swiss banks.'},
+            {val:'F', text:'F. For one, the country has a very stable and prosperous economy.'}
+        ];
+        
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+    
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Education in New Zealand</strong><br><br>
+Education in New Zealand is compulsory (强制的) between the ages of 6 and 16. All children between these ages must ____31____ school. Most children begin their schooling at 5. This period includes primary and secondary education, and it is ____32____.<br><br>
+Early childhood covers the period from birth to 6 years old. This period may include both care and education. There are many ____33____ such as play centers and kindergartens. More and more people are realizing the ____34____ of early childhood education. Now 60 percent of children under 5 join in some form of pre-school education.<br><br>
+Children go to primary school for 8 years or up to the age of about 13. They ____35____ go to secondary schools for a further 5 years. Some students may decide to leave school at 16.<br><br>
+Higher education ____36____ any education or training that takes place after secondary school. In New Zealand, this includes universities, ____37____, and training schools.<br><br>
+New Zealand is ____38____ becoming multi-cultural. More and more international ____39____ are studying there. The education system is adapting to ____40____ the needs of different cultural groups.`;
+        const optList = [
+            {val:'A', text:'A. meet'}, {val:'B', text:'B. students'}, {val:'C', text:'C. quickly'},
+            {val:'D', text:'D. means'}, {val:'E', text:'E. free'}, {val:'F', text:'F. wisely'},
+            {val:'G', text:'G. then'}, {val:'H', text:'H. value'}, {val:'I', text:'I. choices'},
+            {val:'J', text:'J. quit'}, {val:'K', text:'K. attend'}, {val:'L', text:'L. colleges'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+    
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Body Image</strong><br><br>
+Many people are not satisfied (satisfy) with their body images. They are __41__(encourage) to have plastic surgeries (整形手术), diet plans, or diet pills.<br><br>
+However, to build a positive body image __42__(require) a balanced diet and a __43__(health) lifestyle. In our daily life, to eat more fruits and __44__(vegetable) than meat will help us keep fit, and the best way to keep ourselves in shape is to do some vigorous exercise every day.<br><br>
+Besides, a correct attitude is __45__(equal) important. We should not feel __46__(embarrass) about our bodies. We should not believe our body is a shame of personal __47__(fail). We do not need to be as __48__(attract) as everyone else. Instead, we should love ourselves rather than desire for __49__(possible) standards. We should have a real and clear understanding of our body parts, and appreciate our body for the way it is. In this way, we will feel __50__(comfort) and confident.`;
+        
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-20; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+    
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+        
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+        
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+        
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+        
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block'; 
+            }
+            return;
+        }
+        
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+    
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=19;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=20;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-20];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-20], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+    
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2021年10月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none; 
+            width: 100%; 
+            margin-top: 6px; 
+            font-size: 0.85rem; 
+            padding: 6px 10px; 
+            background: #eee; 
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+        
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2021年10月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+    
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Who Is James Bond?</strong><br><br>
+                The latest Bond film is an enormous box-office (票房) hit. But who is James Bond? Where does he come from? Author Ian Fleming, the creator of James Bond, told us something about the origins of the world's most famous secret agent.<br><br>
+                In the first Bond novel, Ian Fleming told us that James Bond was the son of a Scottish father and an Asian mother. But perhaps this was not really true. The title of the 19th Bond film, "The World Is Not Enough", was based on the Latin motto of the Bond family, which is mentioned in one of the early novels. However, it now appears that the motto is not that of the Scottish Bonds, but that of a different Bond family, who came from England. So perhaps Bond is English, not Scottish.<br><br>
+                Bond went to Eton College, the same school as his creator Ian Fleming. This is a school where young people learn how to move in high society, like Bond does so well.<br><br>
+                After leaving school, Bond did not go to university. He joined the British Secret Service. He soon got promoted to the top. From then on he was 007, "licensed to kill", and so began a career which would take him to all the corners of the earth.<br><br>
+                In the early days, Bond's role was quite clear. He was working for the West. His main enemies were men from the KGB and other dangerous organizations. Since the end of the Cold War, the role of the Service has changed, and Bond's job profile has changed with it. Now his main enemies are the big bosses of organized crime and international terrorism.<br><br>
+                Unlike the Cold War, organized crime is unlikely to come to an end. We can therefore be sure that James Bond, the best-known English fictional hero of the 20th century, has many more adventures ahead of him.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Universal Gestures</strong><br><br>
+                Gestures for victory, defeat and stress are almost the same in all countries.<br><br>
+                On the front page of a newspaper we often see the picture of people holding their head in shock. People put their hands on their head or over their mouth when they look on a scene with shock or horror.<br><br>
+                Chris Ulrich is an expert on body language. He said that covering your mouth or putting your hands on your head helps make you feel safer from a perceived threat. By covering part of your face you can feel hidden from the shocking event. Additionally these reactions can help a person comfort himself through touch. Ulrich said it is a self comforting gesture to help people in the moment.<br><br>
+                In times of strong anxiety, people will twist their hands to calm themselves. Ulrich said it is a reaction people often have when they are in front of an audience or nervous. "It's a comfort for them that they'll get through it," said Ulrich. He relates that gesture to a parent trying to calm a child.<br><br>
+                Most athletes react to victories or defeats with specific behaviors. A 2008 study examined pictures of judo (柔道) competitors during the 2008 Olympic Games. They were from different countries, but they showed similar behaviors when they won a match. The winners would throw their head back or raise their hands in triumph. Ulrich said these victory behaviors are a way winners "explode" out and take up more space.<br><br>
+                However, if an athlete suffers a loss, he will act in a way that makes him physically smaller, such as hanging his head. "When you lose, you want to disappear," said Ulrich. The study also found that the judo competitors had the same behavior when they lost.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Little Steps, Big Reward</strong><br><br>
+                ①More than 145 million Americans take walking as part of their exercise, according to a recent report. That's 15 million more people walking than last year. Many places in America have reported an increase in walking. But most of the walkers are found in big cities like New York.<br><br>
+                ②Despite the increase in walking, only about 30% of Americans say they have at least 3 hours to take exercise a week. Our society has been conditioned to be inactive. People rely on modern conveniences and become lazy. The inactive lifestyle has a negative aspect. We are more likely to be in poor health like overweight, which will threaten our life span. That's where walking comes in.<br><br>
+                ③Walking is the best way to improve our health. Just 30 minutes of regular quick walking can help lose weight. At the same time, it can help lower the risk of heart disease and some cancers, and improve our blood pressure. If 30 minutes is too much, we may divide it into three 10-minute parts during the day. Most of us can find 10 minutes if we really try.<br><br>
+                ④Walking requires only a pair of shoes and suits any schedules. Keep a pair of sport shoes at work. If you have a few minutes of free time, make use of them to take a quick walk. Even if you go to a health club several times a week, you can still look for ways to be active while at work. It may be walking downstairs for a direct talk rather than sending an email.<br><br>
+                ⑤Small efforts can make a big difference. But the hardest part for us is getting started. It's usually like this. When people get to a comfort level of walking for 10 minutes, they might think about trying 11 minutes. That first step is really worthy.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "My Favorite Chinese Festival"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 你最喜爱的中国节日是什么<br>2. 你为什么喜欢这个节日<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'C', 'B', 'B', 'B', 'C', 'A', 'A', 'A', 'B'],
+        p1Explain: [
+            "第1题：原文首句 'The latest Bond film is an enormous box-office hit'，票房大卖即赚了很多钱，选True。",
+            "第2题：文中只提到Ian Fleming是创作者，未提及他导演了最新电影，Not Given。",
+            "第3题：原文 'title of the 19th Bond film'，说明是电影名而非小说名，选False。",
+            "第4题：原文 'learn how to move in high society, like Bond does so well'，说明Bond很擅长在上流社会活动，选False。",
+            "第5题：原文 'After leaving school, Bond did not go to university'，未上大学，选False。",
+            "第6题：文中提到Bond升到高层，但并未提及获得许多奖项，Not Given。",
+            "第7题：原文 'a career which would take him to all the corners of the earth'，因工作走遍世界，选True。",
+            "第8题：原文 'His main enemies were men from the KGB and other dangerous organizations'，与危险组织斗争，选True。",
+            "第9题：原文 'has many more adventures ahead of him'，未来还有更多冒险，选True。",
+            "第10题：本文主要介绍Bond的出身、背景、敌人等，并非个性描写，选False。"
+        ],
+        p2: ['B', 'D', 'C', 'A', 'B'],
+        p2Explain: [
+            "第11题：原文 'it is a self comforting gesture'，把手放在嘴上是为了自我安慰，选B。",
+            "第12题：原文 'In times of strong anxiety, people will twist their hands... reaction when they are in front of an audience or nervous'，紧张时扭手，选D。",
+            "第13题：上文提到 'people will twist their hands'，'that gesture'即指twisting one's hands，选C。",
+            "第14题：原文 'winners \"explode\" out and take up more space'，获胜者占据更多空间，选A。",
+            "第15题：原文 'hanging his head'，失败者低头，选B。"
+        ],
+        task1: ['E', 'F', 'D', 'C', 'A'],
+        task1Explain: [
+            "段落①：提到更多人步行，且大多在大城市 → E (More Americans take up walking than before)",
+            "段落②：讲现代生活方式导致不活动和健康问题 → F (Modern lifestyle affects our health negatively)",
+            "段落③：讲步行对健康的益处 → D (Walking is a great way for health improvement)",
+            "段落④：讲步行简单，只需一双鞋，适合任何时间 → C (The advantage of walking is its simplicity)",
+            "段落⑤：讲最难是开始，第一步很重要 → A (The key to walking is getting started)"
+        ],
+        task2: ['D', 'B', 'E', 'F', 'C'],
+        task2Explain: [
+            "第21题：原文 'most of the walkers are found in big cities like New York' → D (big cities in America)",
+            "第22题：原文 'The inactive lifestyle has a negative aspect... threaten our life span' 疾病多由不活动引起 → B (our inactiveness)",
+            "第23题：原文 'Just 30 minutes of regular quick walking can help lose weight...' → E (a daily 30-minute quick walk)",
+            "第24题：原文 'walking downstairs for a direct talk' → F (a face-to-face talk)",
+            "第25题：原文 'might think about trying 11 minutes' → C (we may like to try a longer one)"
+        ],
+        part4: ['C', 'E', 'A', 'B', 'F'],
+        part4Explain: [
+            "第26空：前文说分为三个区域，后文讲北非具体情况，填入C（每个区域有其独特地理和历史）承上启下。",
+            "第27空：前文说欧洲、亚洲人容易来北非，后文应说这些人留下了影响 → E。",
+            "第28空：前文说撒哈拉沙漠，后文降雨少，填入A（一直是人们南行的巨大障碍）最连贯。",
+            "第29空：前文说石油资源，后文说换回很多钱，填入B（石油运往世界各地）。",
+            "第30空：前文说埃及是重要国家，后文说它是非洲和亚洲的桥梁，填入F（约4000万人居住）补充人口信息。"
+        ],
+        part5: ['F', 'I', 'H', 'L', 'D', 'C', 'J', 'A', 'E', 'K'],
+        part5Explain: [
+            "31空：lose their money and belongings（财产）→ F",
+            "32空：pave the way towards success（铺平道路）→ I",
+            "33空：it is natural that（很自然）→ H",
+            "34空：realize your dreams（实现梦想）→ L",
+            "35空：get a lot of advantages from them（从中获得很多好处）→ D",
+            "36空：distinguish between（区分）→ C",
+            "37空：the correct and the incorrect（正确与错误）→ J",
+            "38空：went to the extreme as to say（极端到说）→ A",
+            "39空：continue to fail in good spirits（继续以良好精神失败）→ E（呼应前文not to succeed）",
+            "40空：wisely learning（明智地学习）→ K"
+        ],
+        part6: ['enjoyable', 'located', 'mountainous', 'endless', 'relaxing', 'pleasure', 'rolling', 'nearly', 'houses', 'retired'],
+        part6Explain: [
+            "41空：enjoyable（令人愉快的）修饰climbing",
+            "42空：located（位于）被动语态",
+            "43空：mountainous（多山的）修饰villages",
+            "44空：endless（无尽的）修饰possibilities",
+            "45空：relaxing（放松）动名词，与sailing、skiing并列",
+            "46空：pleasure（乐趣）take pleasure in",
+            "47空：rolling（滚动）动名词，与climbing并列",
+            "48空：nearly（几乎）副词修饰meets",
+            "49空：houses（房屋）复数",
+            "50空：retired（退休的）形容词修饰people"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "The new Bond film made much money for its producer.",
+            "Ian Fleming directed the latest film about James Bond.",
+            "'The World Is Not Enough' is the name of a novel.",
+            "Bond is unable to move in high society.",
+            "Bond went to university before he became a secret agent.",
+            "The British Secret Service gave Bond many awards.",
+            "Bond went to many parts of the world because of his job.",
+            "Bond fought against many dangerous organizations.",
+            "We can expect more adventurous stories about Bond.",
+            "This text tells about the personality of James Bond."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "People put their hands over their mouth to ______.",
+            "People tend to twist their hands when they are ______.",
+            "In Paragraph 4, 'that gesture' refers to ______.",
+            "Judo winners often act in a way that makes them ______.",
+            "The judo losers would ______."
+        ];
+        const opts = [
+            ["A. avoid a danger", "B. gain self-comfort", "C. hide their shock", "D. show their anxiety"],
+            ["A. depressed", "B. angry", "C. shocked", "D. nervous"],
+            ["A. shaking one's hands", "B. covering one's face", "C. twisting one's hands", "D. rubbing one's face"],
+            ["A. occupy more space", "B. appear physically smaller", "C. obtain more respect", "D. become more competitive"],
+            ["A. raise their arms", "B. lower their heads", "C. beat their chests", "D. sit on their knees"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. The key to walking is getting started.', 'B. Walking is the first step to making changes.', 'C. The advantage of walking is its simplicity.', 'D. Walking is a great way for health improvement.', 'E. More Americans take up walking than before.', 'F. Modern lifestyle affects our health negatively.'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Reports say that the walkers are mostly from ______.",
+            "Many diseases are largely caused by ______.",
+            "We can keep healthy by taking ______.",
+            "We can take a quick walk downstairs for ______.",
+            "When feeling good after a 10-minute walk, ______."
+        ];
+        const opts = ['A. we divide a 30-minute walk into 3 parts', 'B. our inactiveness', 'C. we may like to try a longer one', 'D. big cities in America', 'E. a daily 30-minute quick walk', 'F. a face-to-face talk'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+    
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>North Africa</strong><br><br>
+Africa is the second largest continent on Earth. It is about 8,000 kilometers long from north to south. It can be divided into three major regions: northern Africa, central Africa, and southern Africa. ______(26)______<br><br>
+Africa is separated from Europe by the Mediterranean Sea (地中海). It is connected to Asia in the east. For this reason, it has been easy for people from Europe, Asia and other areas to come to North Africa. ______(27)______<br><br>
+Most of North Africa is covered by the Sahara Desert. ______(28)______ There is little rainfall here. The few people who live in the desert live in oases (绿洲). The valley of the Nile River forms one of the oases that stretch across the desert in the east.<br><br>
+Many North African nations have a very important resource. They have large deposits of petroleum. ______(29)______ In return, these nations receive a lot of money. They are spending some of this money to make life better for their people.<br><br>
+Egypt is an important nation in North Africa. ______(30)______ It has served as a bridge between Africa and Asia. People from many nations have passed through Egypt. Today, it controls the Suez Canal. The canal connects the Mediterranean Sea and the Red Sea. It is important for ships traveling between nations in Europe and Asia.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. It has always been a great barrier to people traveling south.'},
+            {val:'B', text:'B. This oil is shipped to many parts of the world.'},
+            {val:'C', text:'C. Each region has its special geography and history.'},
+            {val:'D', text:'D. Asia is much larger than Europe.'},
+            {val:'E', text:'E. All these people have left their influence there.'},
+            {val:'F', text:'F. About 40 million people live there today.'}
+        ];
+        
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+    
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Learning from Mistakes</strong><br><br>
+Lots of people don't dare to make mistakes. They fear that they will be blamed by others or lose their money and ____31____. Therefore, they are under a lot of stress. But risks are unavoidable and they do ____32____ the way towards success. Have you ever heard of someone who achieves success without making any mistakes?<br><br>
+So it is ____33____ that making mistakes in your effort to realize your ____34____ is considered a must. You shouldn't worry about making mistakes as you may get a lot of ____35____ from them. By making mistakes you can ____36____ between the correct and the ____37____ things you did. Anthony D'Angelo said, "In order to succeed you must fail, so that you know what to do the next time." Robert Stevenson even went to the ____38____ as to say, "Our business in life is not to succeed, but to continue to ____39____ in good spirits."<br><br>
+You needn't worry about anything as long as you keep on going by ____40____ learning from your mistakes and trying even harder.`;
+        const optList = [
+            {val:'A', text:'A. extreme'}, {val:'B', text:'B. discover'}, {val:'C', text:'C. distinguish'},
+            {val:'D', text:'D. advantages'}, {val:'E', text:'E. fail'}, {val:'F', text:'F. belongings'},
+            {val:'G', text:'G. recently'}, {val:'H', text:'H. natural'}, {val:'I', text:'I. pave'},
+            {val:'J', text:'J. incorrect'}, {val:'K', text:'K. wisely'}, {val:'L', text:'L. dreams'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+    
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Interlaken, Switzerland</strong><br><br>
+The sound of cow bells ringing across Interlaken's grassland is comforting (comfort). Climbing up the nearby mountains is also __41__(enjoy). So is skiing down them. The town of Interlaken is __42__(locate) in a beautiful setting between two lakes. It is also close to the __43__(mountain) villages. The outdoor possibilities are __44__(end) around Interlaken in summer and winter. They range from sailing, skiing, to climbing or just __45__(relax) in a pool. People can enjoy boating in the summer. They can also take __46__(please) in skiing in the winter. This place is a perfect choice for people if they like ice climbing or __47__(roll) down a hill inside a ball. It meets __48__(near) everyone's needs.<br><br>
+Foreigners are not allowed to buy __49__(house) in Interlaken. But they can buy one in nearby villages. Many __50__(retire) people consider Interlaken a great place to settle around.`;
+        
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+    
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+        
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+        
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+        
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+        
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block'; 
+            }
+            return;
+        }
+        
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+    
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+    
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

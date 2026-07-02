@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2020年8月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2020年8月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Bicycle Commuting</strong><br><br>
+                I may not be a movie star, best-selling author, or millionaire when I grow up, but one thing I will be known for, at least locally, is commuting by bicycle. It's sad to see how few people do—even though many could. Lots of people eagerly campaign for the reduction of greenhouse gases, but by driving cars, they're still contributing to the problem.<br><br>
+                You might be picturing me as an extreme environmentalist (环保主义者), but I'm not one of those teenagers who wear shirts that say "Help save the world: Recycle." Actually, my interest in exercise, health, and fitness led me to cycling.<br><br>
+                Cycling can help you lose weight, improve your health, and prevent many diseases. Cycling also carries a relatively low chance of injury.<br><br>
+                While being good for your body, bicycle commuting is also a great way to cut greenhouse gases. Many environmentalists recycle, plant trees, and drive hybrid cars (混合动力汽车), but bicycle commuting could be even more effective than all of those combined. You could cut down the amount of greenhouse gases just by commuting by bicycle a few times a week.<br><br>
+                Bicycle commuting saves money too. When you buy your bicycle and the things that usually go with it, you might be shocked by the cost. But if you think about the increasingly high gas prices, you will know for sure that you can save a significant amount each year by not driving a car.<br><br>
+                You might think that you don't have time for bicycle commuting. Actually, you probably do. You could cut back on your TV time and pick up this activity. It helps you care for the environment, save money, and most importantly get fit.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Spilt (打翻的) Milk</strong><br><br>
+                I recently heard a story about a famous scientist who had made several very important medical achievements. He was asked why he was so much more creative than the average person.<br><br>
+                He responded that it all came from an experience when he was about two. He had been trying to remove a bottle of milk from the refrigerator when he lost his grip (紧握) and it fell, spilling (打翻) the milk all over the floor.<br><br>
+                When his mother came into the kitchen, instead of yelling at him, or punishing him, she said, "Robert, what a wonderful mess you have made! Well, the damage has already been done. Would you like to play in the milk for a few minutes before we clean it up?"<br><br>
+                Indeed, he did. After a few minutes, his mother said, "Robert, whenever you make a mess like this, eventually you have to clean it up. So, how would you like to do that? We could use a sponge (海绵) or a towel. Which do you prefer?" He chose the sponge and together they cleaned up the spilt milk.<br><br>
+                His mother then said, "You know, what we have here is a failed experiment in how to effectively carry a big milk bottle with two tiny hands. Let's go out in the back yard and fill the bottle with water and see if you can discover a way to carry it without dropping it." The little boy learned that if he grasped the bottle at the top near the lip with both hands, he could carry it without dropping it.<br><br>
+                The scientist remarked that it was then that he knew he didn't need to be afraid to make mistakes. Instead, mistakes were just opportunities for learning something new, which is, after all, what scientific experiments are all about. Even if the experiment "doesn't work", we usually learn something valuable from it.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Volunteers</strong><br><br>
+                ①Volunteers are people who work without being paid. They do the work because they want to. We need volunteers because there are many things that need to be done in society which the Government can't afford to pay for.<br><br>
+                ②Volunteers are motivated by a desire to help others and to make the world a better place. Statistics suggest that more than one million people do voluntary work in New Zealand. Some volunteers do the kind of work that they are particularly interested in, but perhaps haven't had the chance to do during their working lives. Others make use of their professional skills and experience.<br><br>
+                ③Volunteers contribute to society in a number of ways. For example, some give their time to help preserve the natural environment. While there are government-run projects to maintain national parks and forests, the projects would not succeed without volunteers. Some environmental organizations rely solely on voluntary labor.<br><br>
+                ④"Meals on Wheels" is a voluntary organization run by the Red Cross. It delivers meals to elderly people who are unable to cook for themselves. Every year volunteer drivers deliver a million meals. This enables elderly people to remain in their own houses.<br><br>
+                ⑤Volunteer Service Abroad was started in 1962. It sends volunteers to poor countries. To be a volunteer you should be between the ages of 25 and 77, of good health and have a skill or ability that is requested by the country. Volunteers spend two years helping the local people improve their lives. Two years is a long time, but when they return, many volunteers say: "It was the best two years of my life."
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "Spring Is Coming"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 简要描写春天的景象<br>2. 介绍人们在春天里的各种活动<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['C', 'B', 'B', 'A', 'A', 'C', 'A', 'C', 'C', 'C'],
+        p1Explain: [
+            "第1题：文中提到 'I may not be a best-selling author'，不会成为畅销书作家 → Not Given（未提及写书）。",
+            "第2题：原文 'It's sad to see how few people do' 说明很少人骑自行车上班 → 选False。",
+            "第3题：作者说 'I'm not an extreme environmentalist' → 并非全心投入环保 → 选False。",
+            "第4题：原文 'my interest in exercise, health, and fitness led me to cycling' → 为了健康开始骑行 → 选True。",
+            "第5题：原文 'Cycling also carries a relatively low chance of injury.' → 受伤几率低 → 选True。",
+            "第6题：文中未提及人们开车上班的原因 → Not Given。",
+            "第7题：原文 'bicycle commuting could be even more effective than all of those combined' → 更有效 → 选True。",
+            "第8题：文中未提及骑行时的心情 → Not Given。",
+            "第9题：原文提到 'increasingly high gas prices'，但未明确说油价一直在涨 → Not Given。",
+            "第10题：文中未提及自行车对大多数人是否便宜 → Not Given。"
+        ],
+        p2: ['D', 'A', 'C', 'C', 'B'],
+        p2Explain: [
+            "第11题：原文 'famous scientist who had made several very important medical achievements' → 在医学领域取得巨大成功 → 选D。",
+            "第12题：原文 'lost his grip and it fell' → 没拿住瓶子掉了 → 选A。",
+            "第13题：原文 'Would you like to play in the milk for a few minutes' → 鼓励他在牛奶里玩 → 选C。",
+            "第14题：原文 'fill the bottle with water and see if you can discover a way to carry it' → 找拿瓶子的方法 → 选C。",
+            "第15题：原文 'mistakes were just opportunities for learning something new' → 学习新东西 → 选B。"
+        ],
+        task1: ['A', 'D', 'C', 'F', 'E'],
+        task1Explain: [
+            "段落①：定义志愿者 → A",
+            "段落②：为什么人们想当志愿者 → D",
+            "段落③：志愿者如何贡献社会 → C",
+            "段落④：为老人送餐的组织 → F",
+            "段落⑤：派遣志愿者出国组织 → E"
+        ],
+        task2: ['A', 'D', 'F', 'B', 'E'],
+        task2Explain: [
+            "第21题：人们做志愿工作是因为想帮助他人 → A",
+            "第22题：有些志愿者利用专业技能帮助 → D",
+            "第23题：组织依靠志愿者保护自然环境 → F",
+            "第24题：老人不用离开家就能得到送餐 → B",
+            "第25题：返回的志愿者觉得经历很有价值 → E"
+        ],
+        part4: ['A', 'F', 'D', 'B', 'E'],
+        part4Explain: [
+            "第26空：前文说就诊平均15分钟，后文说没时间聊天，填入A（难怪你觉得匆忙）。",
+            "第27空：前文说病人说的话很重要，后文说使诊断更难，填入F（事实上，你的描述能帮我给你很好的护理）。",
+            "第28空：前文说part one是抱怨，后文说part two是体检，填入D（也称问题描述）。",
+            "第29空：前文说描述病情很重要，后文说作为医生也会紧张，填入B（当然，说起来容易做起来难）。",
+            "第30空：前文说会忘记细节，后文说能更具体，填入E（所以我花几分钟写下关键细节）。"
+        ],
+        part5: ['L', 'C', 'E', 'J', 'B', 'K', 'H', 'D', 'F', 'I'],
+        part5Explain: [
+            "31空：especially（尤其）→ L",
+            "32空：change（变化）→ C",
+            "33空：dependent（依赖）→ E",
+            "34空：thirsty（口渴的）→ J",
+            "35空：clean（打扫）→ B",
+            "36空：medicine（药）→ K",
+            "37空：give（给）→ H",
+            "38空：inactive（不活跃的）→ D",
+            "39空：still（仍然）→ F",
+            "40空：responsibility（责任）→ I"
+        ],
+        part6: ['planets', 'finally', 'jealousy', 'warmth', 'fighting', 'possession', 'treated', 'less', 'paying', 'friendlier'],
+        part6Explain: [
+            "41空：planets（行星）复数",
+            "42空：finally（最终）副词",
+            "43空：jealousy（嫉妒）名词",
+            "44空：warmth（温暖）名词",
+            "45空：fighting（战斗）现在进行时",
+            "46空：possession（拥有）名词",
+            "47空：treated（被对待）被动",
+            "48空：less（更少）比较级",
+            "49空：paying（付出）动名词",
+            "50空：friendlier（更友好）比较级"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "I will write a best-selling book on cycling.",
+            "Many local people commute by bicycle.",
+            "I am devoted to environmental protection.",
+            "I started cycling to improve my health.",
+            "People are less likely to get injured while cycling.",
+            "People drive to work for convenience.",
+            "Bicycle commuting could be more effective in reducing greenhouse gases.",
+            "People are in a good mood while cycling.",
+            "Gas prices keep going up.",
+            "Bikes are inexpensive to most people."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "This story is about a scientist who ______.",
+            "He got the milk spilt all over the kitchen floor because he ______.",
+            "After seeing the spilt milk, his mother ______.",
+            "The mother and the son went out in the back yard to ______.",
+            "According to the text, mistakes give us chances to ______."
+        ];
+        const opts = [
+            ["A. was extraordinary when he was young", "B. became well-known after an interview", "C. was smarter than the average person", "D. achieved great success in the medical field"],
+            ["A. dropped the bottle", "B. was naughty", "C. slipped and fell", "D. was weak"],
+            ["A. shouted at him", "B. cleaned the floor herself", "C. encouraged him to play in the milk", "D. forced him to clean the kitchen"],
+            ["A. fill the bottle with milk", "B. clean the bottle", "C. find a way to carry the bottle", "D. search for a new bottle"],
+            ["A. know the truth", "B. learn something new", "C. do some experiments", "D. teach a child a lesson"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Definition of volunteers', 'B. How volunteers are organized', 'C. How volunteers contribute to society', 'D. Why people want to be volunteers', 'E. An organization sending volunteers abroad', 'F. An organization delivering meals to the elderly'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "People do voluntary work because they want to ______.",
+            "Some volunteers help others by ______.",
+            "Some organizations rely on volunteers to help ______.",
+            "The elderly can have their meals delivered without ______.",
+            "Many volunteers returning from poor countries ______."
+        ];
+        const opts = ['A. help others', 'B. leaving their homes', 'C. cooking for the elderly', 'D. using their professional skills', 'E. find their experience rewarding', 'F. preserve the natural environment'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>How to Talk to a Doctor</strong><br><br>
+It's one of the saddest situations in modern medicine: The average doctor's appointment lasts 15 minutes or less. ______(26)______ That doesn't leave much time for chatting about the weather or your mood.<br><br>
+What you don't realize—but what I see very clearly as a doctor—is that what the patient says is more important than ever. ______(27)______ They can also make it much harder for me to figure out what's wrong with you.<br><br>
+Medical schools teach a specific way to conduct an office visit. Part one is the complaint. ______(28)______ Part two is the physical exam. And part three is when the doctor gives you a diagnosis and prescribes tests or a treatment. Chances are, you focus on part three, but the patients who receive the best care are those who master part one. The key is to describe in detail what you've been feeling—not just "bad", but what kind of bad, for how long, and after what kind of activity.<br><br>
+______(29)______ Even though I've been a doctor for many years, I tend to be a little nervous when I'm the one sitting on the exam table. If I haven't prepared, I lose track of the details I intended to share. ______(30)______ When the doctor asks you questions, you can be more specific, and the diagnosis and treatment will be more accurate. And there may be a few minutes left over for a little pleasant conversation!`;
+        const sentenceOptions = [
+            {val:'A', text:'A. No wonder you feel rushed.'},
+            {val:'B', text:'B. Of course, that\'s easier said than done.'},
+            {val:'C', text:'C. It is wise to see a doctor with your friend.'},
+            {val:'D', text:'D. It is also called the description of your problem.'},
+            {val:'E', text:'E. So I take a few minutes to write down some crucial details.'},
+            {val:'F', text:'F. In fact, your descriptions can help me give you great care.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Planting a Garden</strong><br><br>
+Planting a garden is a lot like having a family. Both require a great deal of work, ____31____ as they grow and as the seasons ____32____. As summer days lengthen, your plants become ____33____ on you, much like your children depend on you for food and drink. Like a ____34____ child asking for drink of water, your plants do the same. Their bent body issues a demand much the way your child requests milk or juice. Getting enough water, they would thrive soon.<br><br>
+You might also find you have to ____35____ the space around your plants, much like you pick up toys and clothes that have been thrown in your kid's room. Similarly, roses need to be pruned (修剪), and weeds need to be pulled. To keep children healthy, parents protect their children against disease with ____36____, and gardeners do the same with insect repellent (驱虫剂). To nourish (滋养) them, parents ____37____ children vitamins, and gardeners use fertilizer, as both promote healthy growth.<br><br>
+As children grow up, they need less care. However, here's where the similarity ends. While plants die or become ____38____ during winter, children ____39____ maintain an important role in the family, and parents will find their ____40____ does not come to an end.`;
+        const optList = [
+            {val:'A', text:'A. help'}, {val:'B', text:'B. clean'}, {val:'C', text:'C. change'},
+            {val:'D', text:'D. inactive'}, {val:'E', text:'E. dependent'}, {val:'F', text:'F. still'},
+            {val:'G', text:'G. strong'}, {val:'H', text:'H. give'}, {val:'I', text:'I. responsibility'},
+            {val:'J', text:'J. thirsty'}, {val:'K', text:'K. medicine'}, {val:'L', text:'L. especially'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>What Makes Us Different</strong><br><br>
+The reason Earth differs (differ) from all the other __41__(planet) in the universe is because of you and me. At first, we were living in caves, then came the ice age, then the meltdown, and __42__(final), what we are today. We and Earth as a whole have changed so much. The only thing that hasn't changed is our greed and __43__(jealous).<br><br>
+While we were in caves, we fought for food. While we were living on the ice, we fought for __44__(warm), clothing, and food. Now, we are __45__(fight) over land. Why do we fight for land that was never in our __46__(possess)? Wars, big or small, take place every day. Earth is a single nation. All the land masses on it belong to the planet, not to us. Everyone is the same, regardless of race, gender, or religion. We all deserve to be __47__(treat) equally. We are all also unique, but that doesn't make us any __48__(little) human than the next person.<br><br>
+If we can start by __49__(pay) a compliment (赞美) to a different person each day, our world will be __50__(friendly) to live in. If we at least help one person in need and let room for love to grow in our hearts, the world will be a better place.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

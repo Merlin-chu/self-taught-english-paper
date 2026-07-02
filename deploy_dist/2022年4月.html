@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2022年4月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2022年4月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>Famous Brands</strong><br><br>
+                Why do we always buy certain shoes or clothes that have a famous brand? Why do we have to copy other people? The people we often admire most are those who have their own styles. They don't want to copy someone else's.<br><br>
+                Big companies give free products to famous people, such as sportsmen and movie stars. They intend to get people like you to buy their products. When you spend a lot of money on an expensive pair of shoes, they may not suit you. You might enjoy more if you buy something else at the same price! Besides the brand, you may want to know why they are asking that price. The brand may sometimes have nothing to do with the quality of the product.<br><br>
+                It can be of bad quality and badly made. This makes you think why it has the designer's name on it. It's very important for designers to use their creative talent to make something beautiful. But today the making of money has become more important. So they just copy other products and their standards fall.<br><br>
+                Creative products should be available to people at a reasonable price. In this way, big companies wouldn't be able to dominate (控制) the market and encourage people to spend too much money on their products.<br><br>
+                They are dominating the market by telling us what to buy. If you go into a toy shop or children's clothes shop, you'll find the whole section for girls is almost all pink. Because of the domination of big companies, the original arts and crafts are beginning to die out. It would be a real shame if these arts and crafts were to disappear.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Self-esteem (自尊) and Body Image</strong><br><br>
+                Self-esteem is all about what people think of themselves. It is important because feeling good about yourself can affect how you act. People who have high self-esteem will make friends easily. They are more in control of their behavior, and will enjoy life more.<br><br>
+                Some teenagers struggle with their self-esteem when they grow into adults because the body goes through many changes. Along with the changes comes a natural desire to feel accepted. What's more, they can't help but compare themselves with others. They may compare themselves with the people around them or with actors and other famous people they see on TV, in movies, or in magazines.<br><br>
+                The physical changes can affect how both girls and boys feel about themselves. Some girls may feel uncomfortable about their growing bodies. Others may wish that they were developing faster. Girls may feel like being thin but boys may feel like they don't look big enough.<br><br>
+                It's not just body development that affects self-esteem. Many other factors can affect a person's body image too. Family life, for example, can sometimes influence self-esteem. Some parents spend more time criticizing their kids and the way they look than praising them. This can reduce kids' ability to develop good self-esteem. Also their classmates and peers may tease them about the way they look. These sometimes can affect their self-esteem.<br><br>
+                If there are things about yourself that you want to change and you can change, do this by making goals for yourself. If there are things that you can't change, recognize that your body is your own. It's no one's business but your own what your body is like. Actually, to be happy with yourself, all you need to do is to change the way you see your body.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Helping Children Cope with Stress</strong><br><br>
+                ①To adults, childhood can seem to be happy and free from worries. But children still experience stress. Things like school and their social life can sometimes create pressures that are too difficult for them to deal with. While they may not talk about their troubles, they do want their parents to reach out and help them.<br><br>
+                ②Children deal with stress in both healthy and unhealthy ways. As a parent, you can't protect your children from stress, but you can help them develop healthy ways to cope with stress and solve everyday problems. By doing so, you not only help your children handle their current stresses, but also prepare them to deal with future stresses. Here are a few tips for you.<br><br>
+                ③When you notice that something is upsetting your child, you need to tell your child about it. If you can, name the feeling you think your child is experiencing. This shouldn't sound like blame. It's just a casual observation, and you're interested in hearing more about your child's concern. Be sympathetic and show that you care and want to understand.<br><br>
+                ④Also ask your child to tell you what's wrong. Listen attentively and calmly with interest, patience, openness, and caring. Don't hurry to make judgements. Do not blame or criticize your child for what he or she has done. The idea is to listen to your child's concerns and feelings. Try to get the whole story by patiently asking questions. Take your time. And let your child take his or her time, too.<br><br>
+                ⑤Remember to be patient. As a parent, it hurts to see your child unhappy or stressed. But you should not try to solve every problem for your child. Instead, try to help your child grow into a good problem-solver—a child who knows how to deal with life's ups and downs, express feelings in words, calm down when needed, and never give in to difficulties.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) 给John的邮件</div>
+            <p style="margin-bottom:10px;"><strong>题目：</strong> 假设你的外国朋友 John 想学习汉语，征求你的意见。请给他写一封电子邮件，内容包括：</p>
+            <ul style="margin-bottom:10px; padding-left:20px;">
+                <li>支持他学汉语</li>
+                <li>给出学习建议</li>
+            </ul>
+            <p style="margin-bottom:10px;"><strong>署名：</strong> Li Ke</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'A', 'B', 'B', 'A', 'C', 'C', 'B', 'C', 'A'],
+        p1Explain: [
+            "第1题：原文 'The people we often admire most are those who have their own styles.' → 选True。",
+            "第2题：原文 'Big companies give free products to famous people... They intend to get people like you to buy their products.' → 选True。",
+            "第3题：原文 'When you spend a lot of money on an expensive pair of shoes, they may not suit you.' → 贵的不一定适合，选False。",
+            "第4题：原文 'The brand may sometimes have nothing to do with the quality of the product.' → 名牌不一定质量好，选False。",
+            "第5题：原文 'It's very important for designers to use their creative talent to make something beautiful.' → 创意很重要，选True。",
+            "第6题：文中未提及设计师加班 → Not Given。",
+            "第7题：文中未提及年轻人是否喜欢创意产品 → Not Given。",
+            "第8题：原文 'Creative products should be available to people at a reasonable price.' 这是作者的建议，不代表大公司定价合理 → 选False。",
+            "第9题：文中未提及母亲是否更喜欢为孩子买衣服 → Not Given。",
+            "第10题：原文 'Because of the domination of big companies, the original arts and crafts are beginning to die out.' → 大公司主导损害了创意 → 选True。"
+        ],
+        p2: ['C', 'B', 'A', 'D', 'B'],
+        p2Explain: [
+            "第11题：原文 'People who have high self-esteem will make friends easily.' → 有很多朋友 → 选C。",
+            "第12题：原文 'Some teenagers struggle with their self-esteem... because the body goes through many changes.' → 身体变化大 → 选B。",
+            "第13题：tease 意为嘲笑 → laugh at → 选A。",
+            "第14题：原文 'Some parents spend more time criticizing their kids... than praising them. This can reduce kids' ability to develop good self-esteem.' → 父母应该多表扬 → 选D。",
+            "第15题：原文 'to be happy with yourself... change the way you see your body.' → 爱自己的身体 → 选B。"
+        ],
+        task1: ['F', 'A', 'B', 'E', 'C'],
+        task1Explain: [
+            "段落①：儿童有压力 → F",
+            "段落②：帮助孩子应对压力 → A",
+            "段落③：表达关心 → B",
+            "段落④：倾听孩子 → E",
+            "段落⑤：对孩子有耐心 → C"
+        ],
+        task2: ['E', 'B', 'A', 'D', 'F'],
+        task2Explain: [
+            "第21题：来自学校和社会生活 → E",
+            "第22题：以健康的方式 → B",
+            "第23题：当孩子遇到困难时 → A",
+            "第24题：不要因他/她所做的事而责备 → D",
+            "第25题：教孩子自己解决问题 → F"
+        ],
+        part4: ['E', 'D', 'A', 'F', 'C'],
+        part4Explain: [
+            "第26空：前文说毛色取决于居住地，后文应举例说明颜色差异 → E（山里的丛林狼比沙漠里的颜色深）。",
+            "第27空：前文说狼群通常比狼群小，后文说狼群会分成对狩猎，填入D（所有成员通常都有亲缘关系）。",
+            "第28空：前文说雄性幼崽离开狼群，后文应说雌性幼崽留下 → A。",
+            "第29空：前文说人类定居后丛林狼活动区域扩大，后文说新英格兰定居者消灭狼后丛林狼进入，填入F（例如，丛林狼并非新英格兰本地物种）。",
+            "第30空：后文说它们在这些地区找到充足食物，说明它们出现在大城市 → C（现在在大城市都能找到丛林狼）。"
+        ],
+        part5: ['H', 'D', 'K', 'B', 'C', 'I', 'E', 'J', 'F', 'G'],
+        part5Explain: [
+            "31空：against the law（违法）→ H",
+            "32空：illegal（非法的）→ D",
+            "33空：as they liked（随心所欲）→ K",
+            "34空：their master（他们的主人）→ B",
+            "35空：separated from（与...分离）→ C",
+            "36空：very long hours（很长时间）→ I",
+            "37空：killed（被杀）→ E",
+            "38空：almost every state（几乎每个州）→ J",
+            "39空：way of life（生活方式）→ F",
+            "40空：owned slaves（拥有奴隶）→ G"
+        ],
+        part6: ['pounds', 'produced', 'nearly', 'addition', 'carried', 'friendly', 'using', 'believed', 'unhappy', 'majority'],
+        part6Explain: [
+            "41空：pounds（磅）复数",
+            "42空：produced（生产）过去时",
+            "43空：nearly（几乎）副词",
+            "44空：in addition（此外）固定搭配",
+            "45空：carried（被运走）被动语态",
+            "46空：friendly（友好的）形容词",
+            "47空：using（使用）现在完成进行时",
+            "48空：believed（被认为）被动语态",
+            "49空：unhappy（不开心的）加前缀un-",
+            "50空：majority（大多数）名词"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "We like the people with their own styles.",
+            "Big companies give famous people free products to attract buyers.",
+            "Expensive products often suit people better.",
+            "Famous brand products are of better quality.",
+            "Creativity is important in making good products.",
+            "Famous designers work overtime.",
+            "Young people like creative products.",
+            "Big companies price their products reasonably.",
+            "Mothers prefer to shop for children's clothes.",
+            "The domination of big companies does harm to creativity."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "People with high self-esteem often ______.",
+            "Some teenagers struggle with their self-esteem because ______.",
+            "The word 'tease' (Para.4) most probably means ______.",
+            "To help kids develop good self-esteem, parents should ______.",
+            "To be happy with yourself you should ______."
+        ];
+        const opts = [
+            ["A. control others' behavior", "B. think highly of others", "C. have lots of friends", "D. work very hard"],
+            ["A. their teachers don't like them", "B. their bodies have changed a lot", "C. they cannot accept famous people", "D. they need more time to watch TV"],
+            ["A. laugh at", "B. talk about", "C. argue with", "D. look at"],
+            ["A. compare them with others", "B. make goals for them", "C. criticize their peers", "D. praise them"],
+            ["A. do business", "B. love your body", "C. find new friends", "D. change your behavior"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Help your child deal with stress.', 'B. Show your concern and care.', 'C. Be patient with your child.', 'D. Stories help children.', 'E. Listen to your child.', 'F. Children have stress.'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Children can meet pressures ______.",
+            "Parents can help their children cope with stress ______.",
+            "Talk to your child when he/she is ______.",
+            "Don't blame your child for ______.",
+            "Parents should teach their children ______."
+        ];
+        const opts = ['A. in trouble', 'B. in healthy ways', 'C. to forget their problems', 'D. what he/she has done', 'E. from school and their social life', 'F. to solve problems themselves'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>The Coyote (丛林狼)</strong><br><br>
+The coyote is a relative of the dog and the wolf. Like its relatives, it mostly feeds on other animals. It will, however, eat a wide variety of foods, including insects, fruits and vegetables.<br><br>
+Coyotes are found throughout most of North America, from Mexico and Central America to Canada and Alaska. The color of its coat depends on where it lives. ______(26)______<br><br>
+Like the wolf, coyotes live in groups, or packs. The coyote pack is usually smaller than a wolf pack. ______(27)______ The pack will often divide into pairs to hunt. Female coyotes give birth to baby coyotes once a year. Over half of the babies will die before they reach adulthood. Male babies usually leave the pack to find their own territory. ______(28)______<br><br>
+Wolves and coyotes compete for the same animals for food. Since the coyote is smaller than the wolf, wolves will usually drive the coyote out of any shared living areas.<br><br>
+The coyote adapts easily to new areas. Unlike the wolf, the coyote's living area increased when more and more people settled across North America. ______(29)______ Once the New England settlers eliminated wolves, the coyote moved in. Scientists who have studied the coyote believe it is better than the wolf at living in human areas.<br><br>
+______(30)______ They find enough supply of food in these areas, since coyotes are willing to eat garbage, rodents (such as rabbits and mice) and even small pets. Scientists estimate that as many as 2,000 coyotes may be living in the Chicago area.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. Female babies stay with the parent\'s pack.'},
+            {val:'B', text:'B. The coyote is not an endangered species.'},
+            {val:'C', text:'C. Coyotes are now found in most large cities.'},
+            {val:'D', text:'D. All members of the pack are usually related.'},
+            {val:'E', text:'E. Mountain coyotes were darker than those living in the desert.'},
+            {val:'F', text:'F. For example, the coyote was not native to New England.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Slavery in the United States</strong><br><br>
+In most parts of the United States in the early 1800s, blacks had no rights at all. They did not have the right to vote. It was against the ____31____ for them to go to school with whites. In some states, it was even ____32____ for them to learn to read and write. Free people had the right to come and go as they ____33____, but slaves had to have a pass, or a paper from their ____34____ in order to leave the master's land. Slaves were often ____35____ from their families when they were sold. They had to work very ____36____ hours, but were not paid. If they did not do as they were told, they could be beaten. If they tried to escape, they were hunted down with dogs, and could be tortured or even ____37____ when caught.<br><br>
+Until about 1800, there were slaves in ____38____ every state in the United States. But slaves were not a big part of the Northern way of ____39____. Northern factories hired workers and did not use slaves. By 1850, all Northern states had made slavery illegal.<br><br>
+In the Southern states, however, most of the field workers were slaves; one out of every four families ____40____ slaves. These people were often rich and had large farms.`;
+        const optList = [
+            {val:'A', text:'A. seldom'}, {val:'B', text:'B. master'}, {val:'C', text:'C. separated'},
+            {val:'D', text:'D. illegal'}, {val:'E', text:'E. killed'}, {val:'F', text:'F. life'},
+            {val:'G', text:'G. owned'}, {val:'H', text:'H. law'}, {val:'I', text:'I. long'},
+            {val:'J', text:'J. almost'}, {val:'K', text:'K. liked'}, {val:'L', text:'L. played'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Rubbish: Easy to Produce, but Hard to Get Rid of</strong><br><br>
+We produce a lot of rubbish. There is no question about it. The amount of rubbish we throw away is surprising (surprise). Scientists report that Americans produce about five __41__(pound) of rubbish per person every day. Forty years ago, each person __42__(produce) only half of it each day. There are __43__(near) 300 million people in the US. You do the math. How much rubbish do we produce every day?<br><br>
+In __44__(add) to the amount of rubbish we produce, however we get rid of it is another problem. The plastic bags that we place outside of our homes need to be __45__(carry) away every week. These bags are not __46__(friend) to the environment at all.<br><br>
+Nobody is sure how long a plastic bag takes to totally break down, because we only been __47__(use) plastic as a business for about 90 years. It is __48__(believe), however, that it may take 100 years for a plastic bag to completely break down. I am sure that you will feel __49__(happy) to think that a plastic bag can live longer than the __50__(major) of people on earth.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>

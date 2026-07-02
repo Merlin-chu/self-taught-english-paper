@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>2019年4月 英语(二) · 课程代码00015</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #222;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border: 1px solid #ddd;
+        }
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+            padding-top: 10px;
+            margin-top: -10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .mode-switch {
+            background: #f0f0f0;
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            width: 326px;
+            height: 41px;
+            font-size: 16px;
+            line-height: 26px;
+            color: #222222;
+        }
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #555555;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-radius: 5px;
+            width: 158px;
+            height: 35px;
+        }
+        .mode-btn.active {
+            background: #333;
+            color: white;
+        }
+        .score-badge {
+            font-weight: 600;
+            color: #333;
+        }
+        section {
+            margin-bottom: 36px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 18px;
+            color: #000;
+        }
+        .full-text {
+            background: #fafafa;
+            padding: 18px 22px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: left;
+        }
+        .full-text p {
+            margin: 12px 0;
+        }
+        .question-item {
+            padding: 12px 0;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #eee;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        select, input[type="text"] {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+            font-family: inherit;
+        }
+        .inline-select {
+            margin: 0 4px;
+            min-width: 130px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 3px solid #666;
+            background: #f5f5f5;
+        }
+        .feedback.correct {
+            color: #2c7d64;
+            border-left-color: #2c7d64;
+            display: block;
+        }
+        .feedback.wrong {
+            color: #b91c1c;
+            border-left-color: #b91c1c;
+            display: block;
+        }
+        .inline-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            background: #eee;
+            border-left: 3px solid #ccc;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        button.action-btn {
+            background: #333;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 14px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 30px auto 16px;
+            border: 1px solid #000;
+            border-radius: 4px;
+        }
+        button.action-btn:hover { background: #555; }
+        .result-panel {
+            background: #f8f8f8;
+            padding: 18px 24px;
+            border: 1px solid #ccc;
+            margin-top: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 14px;
+            font-family: inherit;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .writing-note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .options { gap: 12px; padding-left: 10px; }
+            .inline-select { min-width: 100px; }
+            h1 { font-size: 1.3rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .container { padding: 15px 10px; border: none; }
+            h1 { font-size: 1.1rem; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-wrapper">
+        <h1>2019年4月 英语（专升本）真题 <br>
+            课程代码：00015或13000</h1>
+        <div class="mode-switch" id="modeSwitch">
+            <button class="mode-btn active" data-mode="exam">考试模式 (统一判分)</button>
+            <button class="mode-btn" data-mode="practice">练习模式 (即时反馈)</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span>全真模拟 · 完整原文+详细解析 · <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#555; text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">公众号【美林自习室】为大家制作</a></span>
+        <span class="score-badge">总分100分（客观题70分+写作30分）</span>
+    </div>
+
+    <form id="examForm">
+        <!-- ========= 第一部分：阅读判断 ========= -->
+        <section>
+            <div class="section-title">第一部分：阅读判断 (第1~10题，每题1分)</div>
+            <div class="full-text">
+                <strong>My Brother</strong><br><br>
+                My brother is off at college, and I miss him terribly. My brother is a rare kind of guy. He's smart and kind. And, my friends say he's lovely. But it's how he handles things and how he treats his friends and his family that make me feel more proud.<br><br>
+                He applied to 14 colleges. He was accepted by all but one, the one he wanted, Brown University. So he took his second choice, and when he went to his first year, when he came home for summer vacation, he said he'd move to Rhode Island near Brown, find a job, and do whatever he could to become known in the area. He'd work his heart out and do his best at everything. Someone, he was sure, would notice. This was a big deal for my parents as it meant agreeing to a year without college. But they trusted him and encouraged him to do whatever he thought it would take to realize his dream.<br><br>
+                It wasn't long before he was hired as an amateur play director at Brown. Now was his chance to shine, and shine he did. He put a lot of fine finishing touches to the play. He met teachers and school officials alike, everyone knew his name and never hesitated to tell them what he was after.
+            </div>
+            <div id="part1Container"></div>
+        </section>
+
+        <!-- ========= 第二部分：阅读选择 ========= -->
+        <section>
+            <div class="section-title">第二部分：阅读选择 (第11~15题，每题2分)</div>
+            <div class="full-text">
+                <strong>Garlic (大蒜)</strong><br><br>
+                Garlic has a long history of human use of over 7,000 years, it was originally grown in Asia. It finally made its way to Europe and South and North Americas in the 16th century. It rapidly spread to the world because it was easy to grow and could stay alive in poor conditions.<br><br>
+                Garlic has also long been used in medicine. Egyptians fed garlic to the slaves to keep up their strength and to defend against diseases. The Romans believed that garlic cured many diseases and helped heal wounds. Greeks gave garlic to athletes during the Olympic Games in order to increase their strength.<br><br>
+                More recently, garlic has been mentioned as being used as a treatment for battle wounds in both World Wars. In fact, even today people eat garlic for its supposed benefits. For example, many people eat garlic to help fight colds and coughs. Some even claim that garlic can help prevent high blood pressure and cancer.<br><br>
+                A different use for garlic in the past was to keep away bad spirits. In some countries, people believed that if they wore garlic around their necks, bad things would not enter their bodies. And if they hung garlic outside the doors of their homes, bad things would go away.<br><br>
+                Garlic is now grown everywhere in the world. China is the largest producer of garlic, followed by India, South Korea, Egypt and Russia. The popularity of garlic has increased over the years. It is now widely used in all kinds of cooking. Combined dishes, salad dishes include a lot of garlic, for garlic is highly valued for its taste throughout the world.
+            </div>
+            <div id="part2Container"></div>
+        </section>
+
+        <!-- ========= 第三部分：概括大意 & 补全句子 ========= -->
+        <section>
+            <div class="section-title">第三部分：概括段落大意 & 补全句子 (16~25题，每题1分)</div>
+            <div class="full-text">
+                <strong>Easy Ways to Green up Your Life</strong><br><br>
+                ①Eating meat produces greenhouse gas emissions. If you can't give up meat completely, you can reduce your consumption or give up beef. Don't eat out of season farm products. They are grown in greenhouses. A lot of energy goes into heating the greenhouses. And shipping such out-of-season farm products by air from remote places consumes huge amount of energy, too. Just look for local and in-season foods.<br><br>
+                ②Spend less time behind the wheel, cycle and walk more, and use public transport more. If you have to drive, the first thing is to choose a car that uses comparatively less fuel. Besides, stick to the speed limit, keep your tires properly filled with air, empty your trunk of heavy items, and accelerate and brake gently.<br><br>
+                ③Want to take a vacation trip by plane? Don't hurry. Think again. Air travel has a big impact on the environment compared with most other forms of travel. You have better choices. Consider having a vacation within driving distance. If not, taking the train is the best choice.<br><br>
+                ④Think about how much "stuff" you own. A big part of emissions are linked to our consumption. To reduce it we need a change in consumption habit. Do we really need all the things we buy? And do we always need the newest one? Getting new things and making the ones you own last longer will reduce energy use.<br><br>
+                ⑤Your choices about heating and cooling your home are some of the most important things you can do in terms of cutting your greenhouse gas emissions. Keeping the temperature a little lower in the winter and higher in the summer can make a big difference.
+            </div>
+            <div style="margin-bottom:12px; font-weight:bold; color:#000;">Task 1 (16~20) 段落标题选择</div>
+            <div id="task1Container"></div>
+            <div style="margin-top:30px; margin-bottom:12px; font-weight:bold; color:#000;">Task 2 (21~25) 补全句子</div>
+            <div id="task2Container"></div>
+        </section>
+
+        <!-- ========= 第四部分：填句补文 ========= -->
+        <section>
+            <div class="section-title">第四部分：填句补文 (26~30题，每题2分)</div>
+            <div id="part4InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第五部分：填词补文 ========= -->
+        <section>
+            <div class="section-title">第五部分：填词补文 (31~40题，每题1.5分)</div>
+            <div id="part5InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第六部分：完形补文 ========= -->
+        <section>
+            <div class="section-title">第六部分：完形补文 (41~50题，每题1.5分)</div>
+            <div id="part6InlineContainer" class="full-text"></div>
+        </section>
+
+        <!-- ========= 第七部分：短文写作 ========= -->
+        <section>
+            <div class="section-title">第七部分：短文写作 (30分) "Live a Healthy Life"</div>
+            <p style="margin-bottom:10px;"><strong>要点：</strong> <br>1. 什么是健康的生活方式<br>2. 你是怎么做的<br>词数100词左右。</p>
+            <textarea rows="6" id="essayInput" placeholder="在此输入你的作文..."></textarea>
+            <div class="writing-note">提示：写作部分不自动判分，请完成后自行评估或由教师批阅。</div>
+        </section>
+
+        <button type="button" id="submitBtn" class="action-btn">提交试卷 & 查看总分</button>
+        <div id="resultArea" class="result-panel" style="display: none;"></div>
+    </form>
+
+    <div class="follow-section" style="background:#fff; border:1px solid #ddd; padding:16px 20px; margin-top:20px; display:flex; align-items:center; gap:16px;">
+        <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="flex-shrink:0;">
+            <img src="公众号二维码.JPG" alt="关注公众号" style="width:90px; height:90px; border:1px solid #eee; display:block;">
+        </a>
+        <div>
+            <strong style="color:#000; font-size:0.95rem;">关注公众号【美林自习室】</strong>
+            <p style="color:#555; font-size:0.8rem; margin:4px 0 6px;">获取更多自考资料、真题解析和备考资讯</p>
+            <a href="https://weixin.qq.com/r/mp/ykV3b3DENi1JrTQM9xDY" target="_blank" style="color:#333; text-decoration:none; font-weight:600; border:1px solid #333; padding:3px 12px; font-size:0.8rem; display:inline-block; transition:all 0.2s;" onmouseover="this.style.background='#333';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#333';">微信打开关注 →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ====== 答案与解析 ======
+    const ANSWERS = {
+        p1: ['A', 'C', 'A', 'B', 'C', 'C', 'A', 'A', 'B', 'A'],
+        p1Explain: [
+            "第1题：原文 'My brother is a rare kind of guy. He's smart and kind.' → 作者以哥哥为荣 → 选True。",
+            "第2题：文中提到朋友说他可爱，但未说朋友们羡慕作者 → Not Given。",
+            "第3题：原文 'He applied to 14 colleges. He was accepted by all but one' → 被13所录取 → 选True。",
+            "第4题：他被布朗大学拒绝了（accepted by all but one, the one he wanted, Brown）→ 选False。",
+            "第5题：文中未提及父母是否认为他应该去第二志愿 → Not Given。",
+            "第6题：文中说父母信任他，但未说父母为他感到骄傲 → Not Given。",
+            "第7题：原文 'he'd work his heart out and do his best at everything' → 选True。",
+            "第8题：原文 'he was hired as an amateur play director at Brown' → 选True。",
+            "第9题：文中他被雇为业余导演，不是学生 → 选False。",
+            "第10题：原文 'everyone knew his name' → 选True。"
+        ],
+        p2: ['D', 'B', 'C', 'A', 'C'],
+        p2Explain: [
+            "第11题：原文 'originally grown in Asia' → 选D。",
+            "第12题：原文 'because it was easy to grow and could stay alive in poor conditions' → 选B。",
+            "第13题：原文 'Greeks gave garlic to athletes... in order to increase their strength' → 选C。",
+            "第14题：原文 'to keep away bad spirits' → 选A。",
+            "第15题：原文 'China is the largest producer of garlic' → 选C。"
+        ],
+        task1: ['F', 'B', 'C', 'A', 'D'],
+        task1Explain: [
+            "段落①：少吃肉和当季食物 → F",
+            "段落②：少开车 → B",
+            "段落③：少坐飞机 → C",
+            "段落④：改变购物习惯 → A",
+            "段落⑤：适度使用空调 → D"
+        ],
+        task2: ['D', 'A', 'C', 'E', 'B'],
+        task2Explain: [
+            "第21题：吃牛肉会增加温室气体排放 → D",
+            "第22题：建议从车里拿走重物 → A",
+            "第23题：度假旅行最好坐火车 → C",
+            "第24题：少买东西是减少能源使用的方式 → E",
+            "第25题：控制室内温度节约能源 → B"
+        ],
+        part4: ['D', 'B', 'E', 'C', 'F'],
+        part4Explain: [
+            "第26空：前文说George有支幸运笔，后文说我看笔，填入D（他开心而骄傲地把笔递给我）。",
+            "第27空：前文说决定追求写作事业，后文说害怕，填入B（这是一个充满恐惧和焦虑的决定）。",
+            "第28空：前文说眼泪盈眶，后文说拒绝不再可怕，填入E（我抱住他把他紧紧搂在怀里）。",
+            "第29空：前文说George听说男孩有幸运笔，后文说男孩难缠但George不放弃，填入C（他想为我得到它）。",
+            "第30空：前文说George用午餐、漫画书和足球换笔，后文说提醒我有多幸运，填入F（我仍然有那支笔，虽然早已没墨了）。"
+        ],
+        part5: ['J', 'G', 'B', 'I', 'E', 'A', 'K', 'F', 'D', 'H'],
+        part5Explain: [
+            "31空：as they get older（随着年龄增长）→ J",
+            "32空：at ages 7 and 12（在7岁和12岁时）→ G",
+            "33空：the difference between them（他们之间的差异）→ B",
+            "34空：they did not share（他们不共享的）→ I",
+            "35空：reading tests（阅读测试）→ E",
+            "36空：also did better（也做得更好）→ A",
+            "37空：related to（与...相关）→ K",
+            "38空：affect（影响）→ F",
+            "39空：explain the differences（解释差异）→ D",
+            "40空：living conditions（生活条件）→ H"
+        ],
+        part6: ['importance', 'impacting', 'qualified', 'financial', 'banks', 'excessively', 'comparison', 'required', 'educating', 'received'],
+        part6Explain: [
+            "41空：importance（重要性）名词",
+            "42空：impacting（影响）现在分词",
+            "43空：qualified（合格的）形容词",
+            "44空：financial（财务的）形容词",
+            "45空：banks（银行）复数",
+            "46空：excessively（过度地）副词",
+            "47空：comparison（比较）名词",
+            "48空：required（需要）过去分词",
+            "49空：educating（教育）动名词",
+            "50空：received（被收到）过去分词"
+        ]
+    };
+
+    let currentMode = 'exam';
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    modeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            var targetMode = this.getAttribute('data-mode');
+            if (currentMode === targetMode) return;
+
+            document.getElementById('examForm').reset();
+            modeBtns.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            currentMode = targetMode;
+            clearAllFeedbacks();
+            document.getElementById('submitBtn').style.display = currentMode === 'exam' ? 'block' : 'none';
+            document.getElementById('resultArea').style.display = 'none';
+        });
+    });
+
+    function clearAllFeedbacks() {
+        document.querySelectorAll('.feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+        document.querySelectorAll('.inline-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+    }
+
+    // ====== 构建第一部分 ======
+    function buildPart1() {
+        const container = document.getElementById('part1Container');
+        const statements = [
+            "The author is proud of her brother.",
+            "Her friends envy her for having such a brother.",
+            "The brother was accepted by most colleges he applied to.",
+            "The brother was accepted by Brown University.",
+            "The parents thought he should go to his second choice.",
+            "The parents were proud of him for his decision.",
+            "The brother promised to work hard for his dream.",
+            "The brother worked as a play director at Brown.",
+            "The brother was a student at Brown.",
+            "The brother made himself known at Brown."
+        ];
+        for(let i=1;i<=10;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${statements[i-1]}</div>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="A" data-qid="p1_${i}"> A. True</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="B" data-qid="p1_${i}"> B. False</label>
+                    <label class="option-label"><input type="radio" name="p1_${i}" value="C" data-qid="p1_${i}"> C. Not Given</label>
+                </div>
+                <div class="feedback" id="fb_p1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第二部分 ======
+    function buildPart2() {
+        const container = document.getElementById('part2Container');
+        const questions = [
+            "Garlic was first grown in ______.",
+            "Garlic was quickly accepted by people everywhere because it was ______.",
+            "Ancient Greeks believed that garlic can help ______.",
+            "Some ancient people hung garlic outside their doors to ______.",
+            "The largest garlic grower in the world now is ______."
+        ];
+        const opts = [
+            ["A. North America", "B. South America", "C. Europe", "D. Asia"],
+            ["A. simple to cook", "B. easy to grow", "C. good for health", "D. tasty in many dishes"],
+            ["A. cure many diseases", "B. heal battle wounds", "C. increase body strength", "D. keep people healthy"],
+            ["A. frighten bad spirits", "B. decorate their houses", "C. keep away insects", "D. show their wishes"],
+            ["A. Egypt", "B. Korea", "C. China", "D. Russia"]
+        ];
+        for(let i=0;i<5;i++){
+            let idx = i+11;
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            let optsHtml = opts[i].map(opt => `<label class="option-label"><input type="radio" name="p2_${idx}" value="${opt[0].charAt(0)}" data-qid="p2_${idx}"> ${opt}</label>`).join('');
+            div.innerHTML = `<div class="question-text"><strong>第${idx}题</strong> ${questions[i]}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb_p2_${idx}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task1 ======
+    function buildTask1() {
+        const container = document.getElementById('task1Container');
+        const titleOpts = ['A. Change your shopping habit', 'B. Drive less if possible', 'C. Take fewer air trips', 'D. Use air-conditioning moderately', 'E. Take fewer vacations', 'F. Eat less meat and more in-season foods'];
+        for(let i=16;i<=20;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> 选择段落 ${i-15} 的标题</div>
+            <select id="sel_task1_${i}" data-qid="task1_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${titleOpts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task1_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== Task2 ======
+    function buildTask2() {
+        const container = document.getElementById('task2Container');
+        const stems = [
+            "Eating beef can ______.",
+            "One is advised to remove heavy things ______.",
+            "One had better take a train ______.",
+            "Buying less is one way to ______.",
+            "To save energy, properly control ______."
+        ];
+        const opts = ['A. from his car trunk', 'B. your room temperature', 'C. for a vacation trip', 'D. increase greenhouse gas production', 'E. reduce energy use', 'F. your water consumption'];
+        for(let i=21;i<=25;i++){
+            let div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `<div class="question-text"><strong>第${i}题</strong> ${stems[i-21]}</div>
+            <select id="sel_task2_${i}" data-qid="task2_${i}" style="margin-top:8px;"><option value="">--请选择--</option>${opts.map(opt=>`<option value="${opt[0]}">${opt}</option>`).join('')}</select>
+            <div class="feedback" id="fb_task2_${i}"></div>`;
+            container.appendChild(div);
+        }
+    }
+
+    // ====== 第四部分：填句补文 ======
+    function buildPart4() {
+        const container = document.getElementById('part4InlineContainer');
+        const articlePrefix = `<strong>A Lucky Pen</strong><br><br>
+"Mommy, I've got something for you!" George ran through the door after school one day. He waved something above his head. "See it's a lucky pen!" ______(26)______ I looked at the pen in my hand. There was nothing special about it. But I didn't realize how special it was at that moment.<br><br>
+I had made the decision to pursue a career in writing. ______(27)______ I had dreamed about it for a long time but I was afraid to take a chance. I was scared of rejection.<br><br>
+The night before, I had voiced those fears to my husband when I thought George wasn't listening. But George must have overheard us. Now he stood in front of me, watching me examine the pen. "You don't have to be scared now," he said. "This pen will make your stories great and everyone will love you." Tears filled my eyes. ______(28)______ Rejection didn't seem like such a big deal any more. Even if I never sold the first story, I had everything I could ever need. George in my life!<br><br>
+I found out later how lucky I was when I heard what he did to get the pen. During lunch break at school that day, George heard a boy talking about a lucky pen he had. ______(29)______ The boy was a tough negotiator but George didn't give up. In the end, he traded his lunch, his favorite cartoon book, and his new football, his most prized possession for that pen. Just to make me feel better.<br><br>
+______(30)______ It never fails to remind me just how lucky I am! I am the luckiest mother in the world now and forever.`;
+        const sentenceOptions = [
+            {val:'A', text:'A. He got it as a birthday gift.'},
+            {val:'B', text:'B. It was a decision full of fear and anxiety for me.'},
+            {val:'C', text:'C. He wanted to get it for me.'},
+            {val:'D', text:'D. He handed me the pen happily and proudly.'},
+            {val:'E', text:'E. I grabbed him and pulled him tight against me.'},
+            {val:'F', text:'F. I still have that pen, though it\'s long out of ink.'}
+        ];
+
+        let html = `<div>`;
+        let parts = articlePrefix.split(/\n\n/g);
+        for (let paragraph of parts) {
+            let paraParts = paragraph.split(/(______\(\d+\)______)/g);
+            let paraHtml = `<p>`;
+            for (let part of paraParts) {
+                let match = part.match(/______\((\d+)\)______/);
+                if (match) {
+                    let num = parseInt(match[1]);
+                    let selectHtml = ` <select id="part4_${num}" data-qid="part4_${num}" style="min-width:280px; margin:4px 0;">`;
+                    selectHtml += `<option value="">--选择句子--</option>`;
+                    sentenceOptions.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                    selectHtml += `</select> <span id="fb_inline_${num}" class="inline-feedback"></span> `;
+                    paraHtml += selectHtml;
+                } else {
+                    paraHtml += part;
+                }
+            }
+            paraHtml += `</p>`;
+            html += paraHtml;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第五部分：填词补文 ======
+    function buildPart5Inline() {
+        const container = document.getElementById('part5InlineContainer');
+        const baseText = `<strong>Young Readers, Tomorrow's Leaders?</strong><br><br>
+A new study has good news for kids with strong reading skills. Such kids will have high intelligence as they get ____31____. They will have a bright future.<br><br>
+The study included 1,890 twins who did reading tests at ____32____ 7 and 12, and an intelligence test at 16. The twins had the same genes (基因) and home environment. Therefore, the ____33____ between them had to be due to factors that they did not ____34____. For example, one had a better teacher than the other. Some kids did better on the reading ____35____ than their twin brother or sister. They ____36____ did better on the intelligence test. The reading skills ____37____ to enhanced intelligence were evident by age 7. This shows that reading skills can ____38____ a child's intellectual development.<br><br>
+The study also helps to ____39____ the differences among kids in the same family. They share genes, ____40____ conditions and parents. But they can be different in intelligence.`;
+        const optList = [
+            {val:'A', text:'A. also'}, {val:'B', text:'B. difference'}, {val:'C', text:'C. only'},
+            {val:'D', text:'D. explain'}, {val:'E', text:'E. tests'}, {val:'F', text:'F. affect'},
+            {val:'G', text:'G. ages'}, {val:'H', text:'H. living'}, {val:'I', text:'I. share'},
+            {val:'J', text:'J. older'}, {val:'K', text:'K. related'}, {val:'L', text:'L. interested'}
+        ];
+        let html = `<div><p>`;
+        let parts = baseText.split(/(____\d+____)/g);
+        for (let part of parts) {
+            let match = part.match(/____(\d+)____/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let selectHtml = ` <select id="part5_${num}" class="inline-select" data-qid="part5_${num}">`;
+                selectHtml += `<option value="">--选词--</option>`;
+                optList.forEach(opt => { selectHtml += `<option value="${opt.val}">${opt.text}</option>`; });
+                selectHtml += `</select><span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += selectHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</p></div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 第六部分：完形补文 ======
+    function buildPart6Inline() {
+        const container = document.getElementById('part6InlineContainer');
+        const baseText = `<strong>Student Loans</strong><br><br>
+Federal Student Aid is an office providing student aid in the US. The US government knows the __41__(important) of higher education in positively __42__(impact) the nation. It makes sure that any __43__(qualify) student in America is able to get __44__(finance) help for higher education.<br><br>
+Though parents can choose private funding through __45__(bank), the interest rates can be __46__(excessive) high. On the other hand, the interest rates of federally funded student loans are much less in __47__(compare). It is, therefore, very important that parents take all steps __48__(require) to apply for student loans through the government.<br><br>
+Federal Student Aid is involved in __49__(educate) students and their families on the exact procedures to get student loans. Once the applications are __50__(receive), it processes them before the start of each school year.`;
+
+        let html = `<div>`;
+        let parts = baseText.split(/(__\d+__\([^)]+\))/g);
+        for (let part of parts) {
+            let match = part.match(/__(\d+)__\(([^)]+)\)/);
+            if (match) {
+                let num = parseInt(match[1]);
+                let hint = match[2];
+                let inputHtml = ` <input type="text" id="part6_${num}" data-qid="part6_${num}" placeholder="${hint}" style="width:120px; margin:4px;">`;
+                inputHtml += `<span id="fb_inline_${num}" class="inline-feedback"></span>`;
+                html += inputHtml;
+            } else {
+                html += part;
+            }
+        }
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    // ====== 即时校验 ======
+    function getCorrectAnswerAndExplain(qid, userValue) {
+        if (qid.startsWith('p1_')) { let idx = parseInt(qid.split('_')[1])-1; return { correct: ANSWERS.p1[idx], explain: ANSWERS.p1Explain[idx] }; }
+        else if (qid.startsWith('p2_')) { let idx = parseInt(qid.split('_')[1])-11; return { correct: ANSWERS.p2[idx], explain: ANSWERS.p2Explain[idx] }; }
+        else if (qid.startsWith('task1_')) { let idx = parseInt(qid.split('_')[1])-16; return { correct: ANSWERS.task1[idx], explain: ANSWERS.task1Explain[idx] }; }
+        else if (qid.startsWith('task2_')) { let idx = parseInt(qid.split('_')[1])-21; return { correct: ANSWERS.task2[idx], explain: ANSWERS.task2Explain[idx] }; }
+        else if (qid.startsWith('part4_')) { let idx = parseInt(qid.split('_')[1])-26; return { correct: ANSWERS.part4[idx], explain: ANSWERS.part4Explain[idx] }; }
+        else if (qid.startsWith('part5_')) { let idx = parseInt(qid.split('_')[1])-31; return { correct: ANSWERS.part5[idx], explain: ANSWERS.part5Explain[idx] }; }
+        else if (qid.startsWith('part6_')) { let idx = parseInt(qid.split('_')[1])-41; return { correct: ANSWERS.part6[idx], explain: ANSWERS.part6Explain[idx] }; }
+        return null;
+    }
+
+    function instantCheck(element) {
+        if (currentMode !== 'practice') return;
+        const qid = element.getAttribute('data-qid');
+        if (!qid) return;
+        let userValue = null;
+
+        if (element.type === 'radio') {
+            let name = element.name;
+            let selected = document.querySelector(`input[name="${name}"]:checked`);
+            if (selected) userValue = selected.value;
+        } else if (element.tagName === 'SELECT') {
+            userValue = element.value;
+        } else if (element.type === 'text') {
+            userValue = element.value.trim().toLowerCase();
+        }
+
+        if (userValue === null || userValue === '') {
+            let fbSpan = document.getElementById(`fb_inline_${qid.split('_')[1]}`);
+            if (fbSpan) fbSpan.style.display = 'none';
+            return;
+        }
+
+        let result = getCorrectAnswerAndExplain(qid, userValue);
+        if (!result) return;
+        const isCorrect = (userValue === result.correct || (typeof userValue === 'string' && userValue.toLowerCase() === result.correct.toLowerCase()));
+
+        if (qid.startsWith('part4_') || qid.startsWith('part5_') || qid.startsWith('part6_')) {
+            let num = qid.split('_')[1];
+            let fbSpan = document.getElementById(`fb_inline_${num}`);
+            if (fbSpan) {
+                if (isCorrect) fbSpan.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${result.correct}。(${result.explain}) 您选:${userValue}`;
+                fbSpan.style.borderLeftColor = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = isCorrect ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+            return;
+        }
+
+        let fbId = `fb_${qid}`;
+        let fbDiv = document.getElementById(fbId);
+        if (fbDiv) {
+            if (isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${result.explain}`;
+            else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userValue}) 正确答案: ${result.correct}. ${result.explain}`;
+            fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+            fbDiv.style.display = 'block';
+        }
+    }
+
+    function attachGlobalListeners() {
+        document.body.addEventListener('change', (e) => {
+            let target = e.target;
+            if (target && (target.matches('input[type="radio"], select, input[type="text"]'))) {
+                if (currentMode === 'practice') instantCheck(target);
+            }
+        });
+        document.body.addEventListener('input', (e) => {
+            if (currentMode === 'practice' && e.target && e.target.matches('input[type="text"]')) {
+                instantCheck(e.target);
+            }
+        });
+    }
+
+    // ====== 考试模式统一判分 ======
+    function fullExamGrading() {
+        let totalScore = 0;
+        for(let i=1;i<=10;i++){
+            let selected = document.querySelector(`input[name="p1_${i}"]:checked`);
+            let user = selected ? selected.value : null;
+            let correct = ANSWERS.p1[i-1];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_p1_${i}`, ok, correct, ANSWERS.p1Explain[i-1], user);
+        }
+        for(let i=11;i<=15;i++){
+            let selected = document.querySelector(`input[name="p2_${i}"]:checked`);
+            let user = selected ? selected.value.charAt(0) : null;
+            let correct = ANSWERS.p2[i-11];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            showFeedbackStatic(`fb_p2_${i}`, ok, correct, ANSWERS.p2Explain[i-11], user);
+        }
+        for(let i=16;i<=20;i++){
+            let sel = document.getElementById(`sel_task1_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task1[i-16];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task1_${i}`, ok, correct, ANSWERS.task1Explain[i-16], user);
+        }
+        for(let i=21;i<=25;i++){
+            let sel = document.getElementById(`sel_task2_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.task2[i-21];
+            let ok = (user === correct);
+            if(ok) totalScore += 1;
+            showFeedbackStatic(`fb_task2_${i}`, ok, correct, ANSWERS.task2Explain[i-21], user);
+        }
+        for(let i=26;i<=30;i++){
+            let sel = document.getElementById(`part4_${i}`);
+            let user = sel ? sel.value : null;
+            let correct = ANSWERS.part4[i-26];
+            let ok = (user === correct);
+            if(ok) totalScore += 2;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part4Explain[i-26]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part4Explain[i-26]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=31;i<=40;i++){
+            let sel = document.getElementById(`part5_${i}`);
+            let user = sel ? sel.value : null;
+            let correctLetter = ANSWERS.part5[i-31];
+            let ok = (user === correctLetter);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part5Explain[i-31]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correctLetter} (${ANSWERS.part5Explain[i-31]}) 您选:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+        for(let i=41;i<=50;i++){
+            let inp = document.getElementById(`part6_${i}`);
+            let user = inp ? inp.value.trim().toLowerCase() : '';
+            let correct = ANSWERS.part6[i-41].toLowerCase();
+            let ok = (user === correct);
+            if(ok) totalScore += 1.5;
+            let fbSpan = document.getElementById(`fb_inline_${i}`);
+            if(fbSpan){
+                if(ok) fbSpan.innerHTML = `<strong>[正确]</strong> ${ANSWERS.part6Explain[i-41]}`;
+                else fbSpan.innerHTML = `<strong>[错误]</strong> 正确答案:${correct} (${ANSWERS.part6Explain[i-41]}) 您填:${user||'未作答'}`;
+                fbSpan.style.borderLeftColor = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.color = ok ? '#0a5c3e' : '#b91c1c';
+                fbSpan.style.display = 'block';
+            }
+        }
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = `客观题得分: <span style="font-size:1.5rem; color:#d32f2f;">${totalScore.toFixed(1)}</span> / 70分<br><span style="font-size:0.9rem; font-weight:normal;">写作部分(30分)请自行评估。</span><br><br>${totalScore>=50 ? '表现不错！继续巩固写作部分。' : '查看错题解析，继续加油！'}`;
+        resultArea.style.display = 'block';
+        window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    function showFeedbackStatic(fbId, isCorrect, correctAns, explanation, userVal){
+        let fbDiv = document.getElementById(fbId);
+        if(!fbDiv) return;
+        let userShow = userVal ? userVal : '未作答';
+        if(isCorrect) fbDiv.innerHTML = `<strong>[正确]</strong> ${explanation}`;
+        else fbDiv.innerHTML = `<strong>[错误]</strong> (您的答案: ${userShow}) 正确答案: ${correctAns}. ${explanation}`;
+        fbDiv.className = isCorrect ? 'feedback correct' : 'feedback wrong';
+        fbDiv.style.display = 'block';
+    }
+
+    window.onload = () => {
+        buildPart1(); buildPart2(); buildTask1(); buildTask2(); buildPart4(); buildPart5Inline(); buildPart6Inline();
+        attachGlobalListeners();
+        document.getElementById('submitBtn').addEventListener('click', fullExamGrading);
+    };
+</script>
+<script src="js/app.js"></script>
+    <script src="quiz-tracker.js"></script>
+<script src="follow-gate.js"></script>
+</body>
+</html>
